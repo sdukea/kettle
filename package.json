@@ -1,8 +1,0 @@
-{
-  "name": "nue",
-  "private": true,
-  "workspaces": ["apps/*"],
-  "scripts": {
-    "dev:web": "npm run dev -w @nue/web"
-  }
-}
