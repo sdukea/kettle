@@ -1,1 +1,1 @@
-claude on work
+final project changes - now its even better
