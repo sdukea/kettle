@@ -50,7 +50,7 @@ Chrome Web Store listing.
    Nue's record vs. the editorial. Nue's record rated most useful for "what
    would help me re-solve this in 3 weeks" in ≥ 14/20.
 5. Ablation: a decision on whether Tier 2 ever needs to leave the device.
-6. Cost: ≤ $0.05 LLM spend per session at list prices.
+6. Cost: ≤ $0.10 LLM spend per session at list prices (see [pipeline cost envelope](05-ai-pipeline.md#cost-envelope-to-verify-in-v0)).
 
 If criterion 3 or 4 fails after two prompt/pipeline iterations, **stop and
 rethink** before building a backend. That's the whole point of V0.
