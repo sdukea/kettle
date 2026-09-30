@@ -30,8 +30,8 @@ what you'd have written? And which tier of signal is needed?
 
 **Technical requirements**
 - `packages/contracts` (event + record schemas), `packages/analysis`
-  (deterministic stages), `packages/ai` (LLM stages + prompts), `apps/extension`,
-  `tools/fake-leetcode`, a CLI in `packages/ai` or `tools/cli`.
+  (deterministic stages), `packages/pipeline` (LLM stages, prompts, CLI), `apps/extension`,
+  `tools/fake-leetcode`.
 - An LLM API key in `.env` (yours).
 - **No server, no database, no auth, no web UI.**
 
