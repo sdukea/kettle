@@ -1,5 +1,7 @@
 # Nue
 
+*Leetcode's never been this easy.*
+
 Nue watches *how* you solve coding problems and turns that into study
 material, so you don't have to write notes.
 
