@@ -136,7 +136,7 @@ Postgres, so Compose buys little. (If a second service ever appears, add
 `.vscode/extensions.json` recommends: Biome (`biomejs.biome`), Vitest
 (`vitest.explorer`), Playwright (`ms-playwright.playwright`), Tailwind CSS
 IntelliSense. `.vscode/settings.json` sets Biome as the default formatter,
-format-on-save, and `typescript.tsdk` to the workspace TypeScript.
+format-on-save, and organize-imports on save. (TypeScript 7's npm package ships the native `tsc` but not `tsserver`, so VS Code keeps using its built-in language service for editing; `pnpm typecheck` is the source of truth.)
 
 ### Tooling decisions
 

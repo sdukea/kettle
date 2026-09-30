@@ -1,9 +1,21 @@
-.DS_Store
+# secrets
 .env
+.env.*.local
+
+# dependencies and build output
 node_modules/
 dist/
-__pycache__/
-*.pyc
-.venv/
-.pytest_cache/
+.output/
+.wxt/
 *.tsbuildinfo
+
+# test output
+coverage/
+playwright-report/
+test-results/
+
+# full LLM eval outputs stay local; summaries are committed
+packages/pipeline/evals/results/raw/
+
+# OS / editor
+.DS_Store
