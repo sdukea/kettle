@@ -40,9 +40,9 @@ What a record looks like (abridged):
 > **Cue:** pair summing to target → remember what you've seen, look up the complement.
 >
 > **Your journey**
-> 1. **Brute force** (0:00–4:10): nested loops, deleted before running.
+> 1. **Brute force** (0:00–4:10): nested loops, deleted before running.<br>
 >    💭 *Likely abandoned because you expected O(n²) to be too slow.* (low confidence)
-> 2. **Sort + two pointers** (4:10–7:05): 1 run, wrong answer on `[3,2,4]`.
+> 2. **Sort + two pointers** (4:10–7:05): 1 run, wrong answer on `[3,2,4]`.<br>
 >    💭 *Sorting reordered `nums`, so the returned indices pointed into the sorted array.* (high confidence)
 > 3. **Hashmap complement** (7:05–12:00): accepted.
 >
