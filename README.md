@@ -61,6 +61,20 @@ reject or edit it.
 - **Scoped and visible.** Nue runs only on `leetcode.com/problems/*`, never logs
   keystrokes, and always shows when it's recording.
 
+## Privacy
+
+| Nue records | Nue never records |
+|---|---|
+| Code in the LeetCode editor, as it changes | Keystrokes, cursor position, or your screen |
+| Run/submit results (verdicts, errors, failing cases) | Other tabs, other sites, or other apps |
+| Problem identity (slug, title, difficulty) | Problem statement text |
+| Timing, and whether you opened hints or the editorial | Cookies, login details, or request headers |
+
+Chrome itself enforces that limit: the extension only asks for permission on
+`leetcode.com/problems/*`. You can pause, discard any session, export
+everything, or delete your account at any time. Details:
+[privacy & security](docs/08-privacy-security.md).
+
 ## Status
 
 **Design phase.** Architecture and plan are in [`docs/`](docs/README.md). Next
