@@ -90,17 +90,37 @@ The next task is a
 which confirms exactly what LeetCode's run/submit traffic contains. Full plan:
 [MVP](docs/03-mvp.md) · [build phases](docs/11-build-plan.md).
 
-## Repository
+## Documentation
+
+The design is in [`docs/`](docs/README.md). Good places to start:
+
+| If you want to know… | Read |
+|---|---|
+| Why a scoped extension, and why no keylogging | [01 — Capture](docs/01-capture.md) |
+| What the product is and isn't | [02 — Product](docs/02-product.md) |
+| How the pieces fit together | [04 — Architecture](docs/04-architecture.md) |
+| How AI is kept honest | [05 — AI pipeline](docs/05-ai-pipeline.md) · [ADR 0004](docs/adr/0004-observed-vs-inferred.md) |
+| What a learning record contains | [07 — Learning record](docs/07-learning-record.md) |
+| Decisions that are hard to reverse | [ADRs](docs/adr/README.md) |
+
+## Repository layout
 
 ```
-apps/        extension (capture) · web (review) · server (API + worker)   — not yet created
-packages/    contracts · analysis · pipeline                              — not yet created
-tools/       fake-leetcode dev harness                                    — not yet created
-docs/        design documents, ADRs, spikes
+apps/
+  extension/   Chrome extension that captures solving sessions     (planned)
+  web/         web app for reading and reviewing records           (planned)
+  server/      API + background worker                             (planned)
+packages/
+  contracts/   shared schemas: events, traces, records             (planned)
+  analysis/    deterministic analysis, runs in browser and server  (planned)
+  pipeline/    AI stages, claim validation, evals, CLI             (planned)
+tools/
+  fake-leetcode/  local LeetCode-like page for dev and tests       (planned)
+docs/          design documents, ADRs, spikes
 ```
 
-See [docs/10-repository-and-dev-environment.md](docs/10-repository-and-dev-environment.md)
-for the full layout and the reasoning behind it.
+The reasoning behind this layout is in
+[10 — Repository & dev environment](docs/10-repository-and-dev-environment.md).
 
 ## Development
 
