@@ -124,21 +124,34 @@ The reasoning behind this layout is in
 
 ## Development
 
-Requirements: macOS, Node 26 (`.nvmrc`), pnpm 12, PostgreSQL 18 (from V1).
+### Prerequisites
+
+| Tool | Version | Install |
+|---|---|---|
+| Node.js | 26 (pinned in `.nvmrc`) | `brew install fnm && fnm install` |
+| pnpm | 12 (pinned in `package.json`) | `brew install pnpm` (Node 25+ no longer ships corepack) |
+| PostgreSQL | 18, needed from V1 | `brew install postgresql@18` |
+
+### Setup
 
 ```bash
-brew install fnm pnpm
+git clone https://github.com/sdukea/nue.git
+cd nue
 fnm install
 pnpm install
-pnpm check        # lint + typecheck + test
+cp .env.example .env   # fill in keys as phases need them
+pnpm check             # lint + typecheck + test
 ```
+
+### Commands
 
 | Command | Does |
 |---|---|
-| `pnpm check` | Everything CI runs |
+| `pnpm check` | Everything CI runs; must pass before committing |
 | `pnpm lint` / `pnpm format` | Biome check / fix |
 | `pnpm typecheck` | TypeScript across packages |
 | `pnpm test` | Vitest across packages |
 
-More commands arrive with each phase. See the
-[build plan](docs/11-build-plan.md).
+More commands arrive with each phase (`pnpm dev`, `pnpm dev:ext`,
+`pnpm nue analyze`, `pnpm eval`). See the
+[full list](docs/10-repository-and-dev-environment.md#everyday-commands-root-packagejson).
