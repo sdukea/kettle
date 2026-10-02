@@ -75,10 +75,20 @@ Chrome itself enforces that limit: the extension only asks for permission on
 everything, or delete your account at any time. Details:
 [privacy & security](docs/08-privacy-security.md).
 
-## Status
+## Roadmap
 
-**Design phase.** Architecture and plan are in [`docs/`](docs/README.md). Next
-step: the [capture spike](docs/12-risks-and-first-task.md#4-exact-first-implementation-task).
+| Stage | Answers | Scope | Status |
+|---|---|---|---|
+| **Design** | What should we build, and how? | Architecture, data model, privacy model, build plan | ✅ Done |
+| **V0** | Is an auto-generated record better than your own notes? | Capture extension + local CLI pipeline, no server | 🔜 Next |
+| **V1** | Will other people use it? | Accounts, sync, web app, record + history screens, export | Planned |
+| **V1.5** | Does it improve retention? | Spaced review, mistake profile, pattern library, Obsidian/Anki | Planned |
+| **V2** | Does it prepare you for interviews? | Interview mode, readiness summaries, more platforms | Later |
+
+The next task is a
+[logged-in capture spike](docs/12-risks-and-first-task.md#4-exact-first-implementation-task),
+which confirms exactly what LeetCode's run/submit traffic contains. Full plan:
+[MVP](docs/03-mvp.md) · [build phases](docs/11-build-plan.md).
 
 ## Repository
 
