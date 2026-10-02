@@ -18,9 +18,46 @@ where you got stuck, the turning point, your mistakes, and what to remember.
 Over time those records become a review system built from your own history,
 not someone else's editorial.
 
-- **Observe, don't assist.** Nue never helps you while you're solving.
+## How it works
+
+```
+ solve on LeetCode  ──►  Nue records code changes + run results  (browser extension)
+                                       │
+                                       ▼
+                          rebuilds your attempts and mistakes    (deterministic analysis)
+                                       │
+                                       ▼
+                          explains what they likely mean         (AI, evidence-checked)
+                                       │
+                                       ▼
+ review what you'd forget  ◄──  your learning record              (web app)
+```
+
+What a record looks like (abridged):
+
+> **Two Sum** · Python · solved in 12 min · key insight at 7 min
+>
+> **Cue:** pair summing to target → remember what you've seen, look up the complement.
+>
+> **Your journey**
+> 1. **Brute force** (0:00–4:10): nested loops, deleted before running.
+>    💭 *Likely abandoned because you expected O(n²) to be too slow.* (low confidence)
+> 2. **Sort + two pointers** (4:10–7:05): 1 run, wrong answer on `[3,2,4]`.
+>    💭 *Sorting reordered `nums`, so the returned indices pointed into the sorted array.* (high confidence)
+> 3. **Hashmap complement** (7:05–12:00): accepted.
+>
+> **Mistake to remember:** you sorted the input and lost the original indices. Second time this month.
+
+Plain lines are things Nue observed directly. Lines marked 💭 are
+interpretations. Each one cites evidence from your session, and you can confirm,
+reject or edit it.
+
+## Principles
+
+- **Observe, don't assist.** Nue never helps while you're solving. Your
+  struggle is the signal.
 - **Facts vs. inferences.** What Nue *saw* and what it *thinks it means* are
-  always shown separately, and you can correct the latter.
+  always shown separately.
 - **Scoped and visible.** Nue runs only on `leetcode.com/problems/*`, never logs
   keystrokes, and always shows when it's recording.
 
