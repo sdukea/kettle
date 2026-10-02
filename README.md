@@ -155,3 +155,12 @@ pnpm check             # lint + typecheck + test
 More commands arrive with each phase (`pnpm dev`, `pnpm dev:ext`,
 `pnpm nue analyze`, `pnpm eval`). See the
 [full list](docs/10-repository-and-dev-environment.md#everyday-commands-root-packagejson).
+
+## Contributing
+
+- Work on short-lived branches and merge through a PR; `main` stays releasable.
+- Keep commits small, with imperative subject lines ("Add revision compactor").
+- Read the [ADRs](docs/adr/README.md) before changing something they cover, and
+  add a new ADR when you reverse one.
+- Changes to what the extension can capture or which permissions it requests
+  need a docs update in the same PR.
