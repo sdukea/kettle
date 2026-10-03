@@ -92,6 +92,11 @@ which confirms exactly what LeetCode's run/submit traffic contains. Full plan:
 
 ## Documentation
 
+**Research first:** [`research/`](research/README.md) covers problem discovery
+across early-career engineers: evidence, psychology, the market map, 28
+candidate opportunities, the top 5, and a validation plan. Product direction
+waits on that decision.
+
 The design is in [`docs/`](docs/README.md). Good places to start:
 
 | If you want to know… | Read |
