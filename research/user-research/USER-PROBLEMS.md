@@ -76,8 +76,9 @@ different angles.
 
 ### A3. "I'm in tutorial hell; I can't build anything on my own." 🟡
 
-- **Observation:** a widespread genre with dozens of posts [search results in
-  the brief's survey]. Advice converges on "build projects".
+- **Observation:** a widespread genre on dev.to and Substack (a search
+  returned 10+ posts; they are secondary and not individually ledgered). Advice
+  converges on "build projects".
 - **Interpretation:** this is the pre-AI form of what AI now amplifies.
   Following a tutorial and prompting an agent are both "outputs without
   ownership".
