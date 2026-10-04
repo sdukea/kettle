@@ -209,11 +209,12 @@ h3 { font-size: 24px; font-weight: 600; letter-spacing: -.01em; line-height: 1.1
 .panel ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
 .panel li { display: flex; gap: 14px; padding: 13px 0; border-top: .5px solid var(--hair); font-size: 17px; line-height: 1.35; }
 .panel li:first-child { border-top: 0; }
-.panel li span { color: var(--muted); font-size: 15px; display: block; margin-top: 2px; }
-.mark { flex: none; width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; margin-top: 1px; }
-.mark svg { width: 12px; height: 12px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-.mark.y { background: var(--dot); color: #fff; }
-.mark.n { background: rgba(120, 120, 128, .2); color: var(--muted); }
+.panel li div span { color: var(--muted); font-size: 15px; display: block; margin-top: 2px; }
+.mark { flex: none; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-top: -1px; }
+.mark svg { display: block; width: 12px; height: 12px; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+.mark.y { background: var(--dot); color: #fff; box-shadow: 0 2px 8px rgba(10, 132, 255, .28); }
+.mark.n { background: rgba(120, 120, 128, .16); color: var(--muted); }
+.mark.n svg { width: 10px; height: 10px; stroke-width: 2.2; }
 @media (max-width: 760px) { .ledger { grid-template-columns: 1fr; } }
 
 /* ---------- rail ---------- */
@@ -281,7 +282,7 @@ footer nav a { color: var(--text); opacity: .8; }
 <section class="light hero">
   <div class="wrap">
     <p class="eyebrow">A product thesis</p>
-    <h1>Anyway.</h1>
+    <h1>Anyway</h1>
     <p class="sub">The Google Maps of human achievement was never going to be about the map.</p>
     <div class="links">
       <a href="#verdict">See the verdict</a>
@@ -429,19 +430,19 @@ footer nav a { color: var(--text); opacity: .8; }
       <div class="panel">
         <h3>Uses</h3>
         <ul>
-          <li><span class="mark y" aria-hidden="true"><svg viewBox="0 0 12 12"><path d="M2.5 6.3 4.9 8.6 9.5 3.6"/></svg></span><div>Mastery experiences<span>Early checks are passable. Wins are measured, never awarded.</span></div></li>
-          <li><span class="mark y" aria-hidden="true"><svg viewBox="0 0 12 12"><path d="M2.5 6.3 4.9 8.6 9.5 3.6"/></svg></span><div>A real goal gradient<span>The distance to the arrival test shrinks only on evidence.</span></div></li>
-          <li><span class="mark y" aria-hidden="true"><svg viewBox="0 0 12 12"><path d="M2.5 6.3 4.9 8.6 9.5 3.6"/></svg></span><div>If-then planning<span>Every session ends with one tap: when and where next. d ≈ 0.65 across 94 studies.</span></div></li>
-          <li><span class="mark y" aria-hidden="true"><svg viewBox="0 0 12 12"><path d="M2.5 6.3 4.9 8.6 9.5 3.6"/></svg></span><div>Fresh starts<span>After a lapse: a new week, a new route, no mention of the gap.</span></div></li>
+          <li><span class="mark y" aria-hidden="true"><svg viewBox="0 0 12 12"><path d="M2.4 6.4 4.9 8.8 9.6 3.4"/></svg></span><div>Mastery experiences<span>Early checks are passable. Wins are measured, never awarded.</span></div></li>
+          <li><span class="mark y" aria-hidden="true"><svg viewBox="0 0 12 12"><path d="M2.4 6.4 4.9 8.8 9.6 3.4"/></svg></span><div>A real goal gradient<span>The distance to the arrival test shrinks only on evidence.</span></div></li>
+          <li><span class="mark y" aria-hidden="true"><svg viewBox="0 0 12 12"><path d="M2.4 6.4 4.9 8.8 9.6 3.4"/></svg></span><div>If-then planning<span>Every session ends with one tap: when and where next. d ≈ 0.65 across 94 studies.</span></div></li>
+          <li><span class="mark y" aria-hidden="true"><svg viewBox="0 0 12 12"><path d="M2.4 6.4 4.9 8.8 9.6 3.4"/></svg></span><div>Fresh starts<span>After a lapse: a new week, a new route, no mention of the gap.</span></div></li>
         </ul>
       </div>
       <div class="panel">
         <h3>Refuses</h3>
         <ul>
-          <li><span class="mark n" aria-hidden="true"><svg viewBox="0 0 12 12"><path d="M3.5 3.5 8.5 8.5M8.5 3.5 3.5 8.5"/></svg></span><div>Streaks you can lose<span>Loss framing keeps people through fear.</span></div></li>
-          <li><span class="mark n" aria-hidden="true"><svg viewBox="0 0 12 12"><path d="M3.5 3.5 8.5 8.5M8.5 3.5 3.5 8.5"/></svg></span><div>Illusory progress<span>Bonus stamps work. We still won’t fake a head start.</span></div></li>
-          <li><span class="mark n" aria-hidden="true"><svg viewBox="0 0 12 12"><path d="M3.5 3.5 8.5 8.5M8.5 3.5 3.5 8.5"/></svg></span><div>Progress for time spent<span>Hours watched are not position.</span></div></li>
-          <li><span class="mark n" aria-hidden="true"><svg viewBox="0 0 12 12"><path d="M3.5 3.5 8.5 8.5M8.5 3.5 3.5 8.5"/></svg></span><div>Guilt notifications<span>At most one a day, only for a session you chose.</span></div></li>
+          <li><span class="mark n" aria-hidden="true"><svg viewBox="0 0 12 12"><path d="M2 2 10 10M10 2 2 10"/></svg></span><div>Streaks you can lose<span>Loss framing keeps people through fear.</span></div></li>
+          <li><span class="mark n" aria-hidden="true"><svg viewBox="0 0 12 12"><path d="M2 2 10 10M10 2 2 10"/></svg></span><div>Illusory progress<span>Bonus stamps work. We still won’t fake a head start.</span></div></li>
+          <li><span class="mark n" aria-hidden="true"><svg viewBox="0 0 12 12"><path d="M2 2 10 10M10 2 2 10"/></svg></span><div>Progress for time spent<span>Hours watched are not position.</span></div></li>
+          <li><span class="mark n" aria-hidden="true"><svg viewBox="0 0 12 12"><path d="M2 2 10 10M10 2 2 10"/></svg></span><div>Guilt notifications<span>At most one a day, only for a session you chose.</span></div></li>
         </ul>
       </div>
     </div>
