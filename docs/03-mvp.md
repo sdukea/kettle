@@ -1,5 +1,7 @@
 # 03 — MVP and Versions
 
+> **Updated by [13 — Product spec](13-product-spec.md)** (2026-10-04): cold re-solve comparison moves from V2 into the MVP, an observed-only record ships in the extension before any server, and Beta-0 replaces the start of V1. Where they conflict, doc 13 wins.
+
 Covers design-doc section **5 (MVP definition)**.
 
 The hypothesis:

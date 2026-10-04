@@ -319,6 +319,7 @@ Additions to [04 §4](04-architecture.md#4-api-boundaries):
 | Method | Path | Client | Purpose |
 |---|---|---|---|
 | `POST` | `/v1/devices/redeem` | Extension | Beta-0: invite code → device token |
+| `DELETE` | `/v1/device-data` | Extension | Beta-0: delete everything uploaded by this device (no accounts yet) |
 | `GET` | `/v1/queue` | Web / extension | Due re-solves (from `problem_schedule`) |
 | `GET` | `/v1/sessions/:id/comparison` | Web | `SessionComparison` + prior session ref |
 | `GET/PUT` | `/v1/sheets[/:id]` | Web / extension | Sheet CRUD (slugs only) |

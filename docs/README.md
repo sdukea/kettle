@@ -1,6 +1,6 @@
 # Nue Design Documentation
 
-Start here. The documents are ordered so each builds on the previous one. The
+Start here. Docs 13–14 (written after the [research](../research/README.md)) update 03 and 11 where they conflict. The documents are ordered so each builds on the previous one. The
 capture question comes first because it constrains everything else.
 
 | Doc | Contents |
@@ -17,6 +17,8 @@ capture question comes first because it constrains everything else.
 | [10 — Repo & dev env](10-repository-and-dev-environment.md) | Repository layout and why, macOS setup, commands, git strategy |
 | [11 — Build plan](11-build-plan.md) | Phases with files, interfaces, tests, done criteria; testing strategy |
 | [12 — Risks & first task](12-risks-and-first-task.md) | Technical/product risks, what not to build, exact first task |
+| [13 — Product spec](13-product-spec.md) | **Post-research update:** target user, cold re-solve loop, public card, data and API additions, metrics |
+| [14 — Engineering roadmap](14-engineering-roadmap.md) | Milestones M0–M9, each runnable, with three binding gates |
 | [ADRs](adr/README.md) | Decisions that are expensive to reverse |
 | [Spikes](spikes/) | Time-boxed investigations and their findings |
 

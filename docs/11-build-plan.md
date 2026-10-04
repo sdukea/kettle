@@ -1,5 +1,7 @@
 # 11 — Build Plan and Testing Strategy
 
+> **Order superseded by [14 — Engineering roadmap](14-engineering-roadmap.md)** (2026-10-04). The phase contents below (files, interfaces, tests) still apply.
+
 Covers design-doc sections **17 (Build phases)** and **18 (Testing
 strategy)**.
 
