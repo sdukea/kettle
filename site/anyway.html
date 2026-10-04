@@ -100,24 +100,43 @@ h3 { font-size: 24px; font-weight: 600; letter-spacing: -.01em; line-height: 1.1
 .hero { padding-top: 160px; padding-bottom: 40px; overflow: hidden; }
 .hero .eyebrow { font-size: 17px; }
 .hero .sub { font-size: clamp(22px, 2.8vw, 30px); color: var(--text); font-weight: 600; letter-spacing: -.01em; max-width: 720px; }
-.hero-map { margin: 64px auto 0; max-width: 1100px; width: 100%; aspect-ratio: 1100 / 380; display: block; }
+.hero-stage { position: relative; margin: 64px auto 0; max-width: 1100px; width: 100%; }
+.hero-map { width: 100%; aspect-ratio: 1100 / 380; display: block; overflow: visible; }
+.hero-map .plan { fill: none; stroke: var(--dot); stroke-width: 4; stroke-linecap: round; stroke-dasharray: 1 12; opacity: .45; }
+.hero-map .stop { fill: var(--page); stroke: var(--dot); stroke-width: 3; transition: fill .4s var(--ease); }
+.hero-map .stop.done { fill: var(--dot); }
+.hero-tag {
+  position: absolute; transform: translate(-50%, calc(-100% - 30px)); pointer-events: none;
+  display: flex; flex-direction: column; align-items: center; gap: 1px; white-space: nowrap;
+  padding: 9px 16px; border-radius: 16px; background: var(--glass);
+  -webkit-backdrop-filter: blur(20px) saturate(180%); backdrop-filter: blur(20px) saturate(180%);
+  box-shadow: 0 8px 28px rgba(16, 40, 80, .12), inset 0 0 0 .5px var(--hair);
+  transition: opacity .35s var(--ease), transform .35s var(--ease);
+}
+.hero-tag b { font-size: 15px; font-weight: 600; color: var(--text); letter-spacing: -.01em; }
+.hero-tag span { font-size: 12px; color: var(--dot); font-weight: 600; }
+.hero-tag.away { opacity: 0; transform: translate(-50%, calc(-100% - 18px)); }
+.hero-tag.high { transform: translate(-50%, calc(-100% - 66px)); }
+.hero-tag.high.away { transform: translate(-50%, calc(-100% - 54px)); }
+@media (max-width: 600px) { .hero-tag { padding: 6px 11px; } .hero-tag b { font-size: 12px; } .hero-tag span { font-size: 10px; } }
 .hero-map .road { fill: none; stroke: var(--hair); stroke-width: 22; stroke-linecap: round; }
-.hero-map .route { fill: none; stroke: var(--dot); stroke-width: 7; stroke-linecap: round; stroke-dasharray: 2 0; }
+.hero-map .route { fill: none; stroke: var(--dot); stroke-width: 7; stroke-linecap: round; }
 .hero-map .grid { stroke: var(--hair); stroke-width: 1; }
 .hero-map .pin { fill: var(--text); }
 .hero-map text { fill: var(--muted); font: 600 13px var(--font); }
-.pulse { transform-origin: center; transform-box: fill-box; animation: pulse 2.4s var(--ease) infinite; }
+.pulse { transform-origin: 0 0; animation: pulse 2.4s var(--ease) infinite; }
 @keyframes pulse { 0% { transform: scale(.6); opacity: .7; } 100% { transform: scale(2.4); opacity: 0; } }
 
 /* ---------- bento ---------- */
-.bento { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; margin-top: 64px; text-align: left; }
-.tile { background: var(--card); border-radius: 28px; padding: 32px 28px 30px; display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+.wrap.wide { max-width: 1200px; }
+.bento { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px; margin-top: 64px; text-align: left; }
+.tile { background: var(--card); border-radius: 30px; padding: 40px 34px 34px; min-height: 420px; display: flex; flex-direction: column; gap: 16px; min-width: 0; container-type: inline-size; }
 .tile.wide { grid-column: span 2; }
-.tile .big { font-size: clamp(48px, 6vw, 72px); font-weight: 700; letter-spacing: -.03em; line-height: 1; font-variant-numeric: tabular-nums; }
+.tile .big { font-size: min(76px, 31cqi); white-space: nowrap; font-weight: 700; letter-spacing: -.03em; line-height: 1; font-variant-numeric: tabular-nums; }
 .tile p { margin: 0; color: var(--muted); font-size: 17px; line-height: 1.4; }
 .tile p strong { color: var(--text); font-weight: 600; }
 .tile .src { margin-top: auto; padding-top: 6px; font-size: 12px; }
-@media (max-width: 1000px) { .bento { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 1100px) { .bento { grid-template-columns: repeat(2, minmax(0, 1fr)); } .tile { min-height: 0; } }
 @media (max-width: 600px) { .bento { grid-template-columns: 1fr; } .tile.wide { grid-column: auto; } }
 
 /* ---------- insight equation ---------- */
@@ -205,7 +224,7 @@ h3 { font-size: 24px; font-weight: 600; letter-spacing: -.01em; line-height: 1.1
 .panel li div span { color: var(--muted); font-size: 15px; display: block; margin-top: 2px; }
 .mark { flex: none; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-top: -1px; }
 .mark svg { display: block; width: 12px; height: 12px; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
-.mark.y { background: var(--dot); color: #fff; box-shadow: 0 2px 8px rgba(10, 132, 255, .28); }
+.mark.y { background: var(--dot); color: #fff; }
 .mark.n { background: var(--x-bg); color: #fff; }
 .mark.n svg { width: 10px; height: 10px; stroke-width: 2.2; }
 @media (max-width: 760px) { .ledger { grid-template-columns: 1fr; } }
@@ -285,20 +304,26 @@ footer nav a { color: var(--text); opacity: .8; }
       <a href="https://github.com/sdukea/this-maps/tree/main/docs">Browse the research<svg class="go" viewBox="0 0 24 12" aria-hidden="true"><path d="M3 6h18"/><circle cx="5" cy="6" r="3"/></svg></a>
     </div>
   </div>
-  <svg class="hero-map" viewBox="0 0 1100 380" role="img" aria-label="A route from where you are to where you want to be, with the blue dot at the start">
+  <div class="hero-stage">
+  <svg class="hero-map" id="heroMap" viewBox="0 0 1100 380" role="img" aria-label="The blue dot travels a route: position fixed, part of the roadmap skipped, a gap closed, a reroute after a missed week, then arrival at the test">
     <g class="grid">
       <line x1="0" y1="95" x2="1100" y2="95"/><line x1="0" y1="190" x2="1100" y2="190"/><line x1="0" y1="285" x2="1100" y2="285"/>
       <line x1="220" y1="0" x2="220" y2="380"/><line x1="440" y1="0" x2="440" y2="380"/><line x1="660" y1="0" x2="660" y2="380"/><line x1="880" y1="0" x2="880" y2="380"/>
     </g>
     <path class="road" d="M120 300 C 300 300, 300 120, 520 140 S 760 300, 980 90"/>
-    <path class="route" d="M120 300 C 300 300, 300 120, 520 140 S 760 300, 980 90"/>
-    <circle class="pulse" cx="120" cy="300" r="22" fill="var(--dot)"/>
-    <circle cx="120" cy="300" r="13" fill="var(--dot)" stroke="#fff" stroke-width="5"/>
+    <path class="plan" id="heroPlan" d="M120 300 C 300 300, 300 120, 520 140 S 760 300, 980 90"/>
+    <path class="route" id="heroRoute" d="M120 300 C 300 300, 300 120, 520 140 S 760 300, 980 90"/>
+    <g id="heroStops"></g>
     <path class="pin" d="M980 90 m0 -44 a20 20 0 0 1 20 20 c0 15 -20 30 -20 30 s-20 -15 -20 -30 a20 20 0 0 1 20 -20z"/>
     <circle cx="980" cy="66" r="7" fill="var(--page)"/>
-    <text x="120" y="350" text-anchor="middle">You, measured</text>
     <text x="980" y="140" text-anchor="middle">Arrival test</text>
+    <g id="heroDot" transform="translate(120 300)">
+      <circle class="pulse" r="22" fill="var(--dot)"/>
+      <circle r="13" fill="var(--dot)" stroke="#fff" stroke-width="5"/>
+    </g>
   </svg>
+  <div class="hero-tag" id="heroTag" style="left:10.9%;top:78.9%"><b>Position fixed</b><span>15 minutes</span></div>
+  </div>
 </section>
 
 <!-- VERDICT -->
@@ -312,7 +337,7 @@ footer nav a { color: var(--text); opacity: .8; }
 
 <!-- EVIDENCE -->
 <section class="light">
-  <div class="wrap">
+  <div class="wrap wide">
     <p class="eyebrow">Why plans aren’t the bottleneck</p>
     <h2>People already have the plan. They still stop.</h2>
     <div class="bento">
@@ -547,6 +572,83 @@ footer nav a { color: var(--text); opacity: .8; }
   </div>
 </footer>
 
+<script>
+(() => {
+  const route = document.getElementById('heroRoute');
+  const dot = document.getElementById('heroDot');
+  const tag = document.getElementById('heroTag');
+  const stopsG = document.getElementById('heroStops');
+  const svg = document.getElementById('heroMap');
+  if (!route || !dot) return;
+  const L = route.getTotalLength();
+  // Each stop is a moment from the product: where the dot rests and what it learned.
+  const stops = [
+    { at: 0,    title: 'Position fixed',   note: '15 minutes',          dwell: 1600 },
+    { at: .27,  title: 'Skipped 60%',      note: 'Already known',       dwell: 1500 },
+    { at: .52,  title: 'Gap closed',       note: 'Data structures',     dwell: 1500 },
+    { at: .76,  title: 'Missed a week',    note: 'Rerouted, no guilt',  dwell: 1700 },
+    { at: 1,    title: 'Ready',            note: 'Go apply',            dwell: 2800 }
+  ];
+  const ns = 'http://www.w3.org/2000/svg';
+  const marks = stops.slice(1, -1).map(st => {
+    const p = route.getPointAtLength(st.at * L);
+    const c = document.createElementNS(ns, 'circle');
+    c.setAttribute('class', 'stop'); c.setAttribute('r', 7);
+    c.setAttribute('cx', p.x); c.setAttribute('cy', p.y);
+    stopsG.appendChild(c); return c;
+  });
+  route.style.strokeDasharray = L;
+  const ease = t => t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+
+  function place(f) {
+    const p = route.getPointAtLength(f * L);
+    dot.setAttribute('transform', `translate(${p.x} ${p.y})`);
+    route.style.strokeDashoffset = L * (1 - f);
+    marks.forEach((m, i) => m.classList.toggle('done', f >= stops[i + 1].at - .001));
+    return p;
+  }
+  function show(i, p) {
+    tag.querySelector('b').textContent = stops[i].title;
+    tag.querySelector('span').textContent = stops[i].note;
+    tag.style.left = (p.x / 1100 * 100) + '%';
+    tag.style.top = (p.y / 380 * 100) + '%';
+    tag.classList.toggle('high', i === stops.length - 1);
+    tag.classList.remove('away');
+  }
+
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) { show(0, place(0)); return; }
+
+  // Timeline: dwell at a stop, then travel to the next (speed ~ distance).
+  let i = 0, phase = 'dwell', t0 = performance.now(), visible = true, raf;
+  show(0, place(0));
+  function frame(now) {
+    if (!visible) { raf = null; return; }
+    const el = now - t0;
+    if (phase === 'dwell') {
+      if (el > stops[i].dwell) {
+        tag.classList.add('away');
+        if (i === stops.length - 1) { phase = 'reset'; }
+        else { phase = 'move'; }
+        t0 = now;
+      }
+    } else if (phase === 'move') {
+      const a = stops[i].at, b = stops[i + 1].at, dur = 900 + (b - a) * 3600;
+      const k = Math.min(1, el / dur);
+      place(a + (b - a) * ease(k));
+      if (k === 1) { i++; phase = 'dwell'; t0 = now; show(i, route.getPointAtLength(stops[i].at * L)); }
+    } else if (phase === 'reset') {
+      const k = Math.min(1, el / 700);
+      dot.style.opacity = 1 - k;
+      if (k === 1) { i = 0; place(0); dot.style.opacity = 1; phase = 'dwell'; t0 = now; show(0, route.getPointAtLength(0)); }
+    }
+    raf = requestAnimationFrame(frame);
+  }
+  new IntersectionObserver(([e]) => {
+    visible = e.isIntersecting;
+    if (visible && !raf) { t0 = performance.now() - 0; raf = requestAnimationFrame(frame); }
+  }).observe(svg);
+})();
+</script>
 <script>
 (() => {
   const track = document.getElementById('product');
