@@ -63,7 +63,7 @@ flags). We capture these because they are the only lossless source: Tier 1 can
 always be recomputed from Tier 2, not the other way round. Operations are
 **compacted into revisions** and then **deleted** after a retention window.
 They never leave the device unless the user opts in to "upload full edit
-history" (V1 default: off, see [privacy](07-privacy-security.md)).
+history" (V1 default: off, see [privacy](08-privacy-security.md)).
 
 **Session context (small, required).**
 Tab visibility and editor focus (to separate active time from idle time),
@@ -198,7 +198,7 @@ with the user's session).
 - **Fidelity:** Tier 0 only, and only submits, not runs. No abandoned code.
 - **Verdict:** ⚠️ A useful **backfill** later ("import your last 100 accepted
   solutions to seed your pattern library"). It isn't the capture mechanism, and
-  it raises ToS questions to be handled carefully (see [privacy](07-privacy-security.md#third-party-terms)).
+  it raises ToS questions to be handled carefully (see [privacy](08-privacy-security.md#third-party-terms)).
 
 ### Summary matrix
 
@@ -268,7 +268,7 @@ Nothing for LeetCode-in-browser. A desktop component would matter only for:
    as Monaco's), or
 2. a **menu-bar presence**, which the extension's toolbar badge already covers.
 
-So the decision is **no desktop app in V0–V1.5**. See [architecture](03-architecture.md#why-not-a-desktop-app).
+So the decision is **no desktop app in V0–V1.5**. See [architecture](04-architecture.md#why-not-a-desktop-app).
 
 ### Session boundaries (deterministic)
 
