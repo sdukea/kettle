@@ -12,7 +12,7 @@
   --font: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", Inter, "Helvetica Neue", Arial, sans-serif;
 
   --page: #ffffff;
-  --surface: #f5f5f7;
+  --surface: #f2f6fc;
   --card: #ffffff;
   --text: #1d1d1f;
   --muted: #6e6e73;
@@ -28,7 +28,7 @@
   --grad-a: #0066dd;
   --grad-b: #2aa8f2;
   --red: #ff453a;
-  --x-bg: #aeaeb2;
+  --x-bg: #a9b1bf;
 
   --ease: cubic-bezier(0.28, 0.11, 0.32, 1);
   --col: 980px;
@@ -69,6 +69,14 @@ section { padding-block: 120px; padding-inline: 22px; text-align: center; }
 .wrap { max-width: var(--col); margin: 0 auto; }
 .light { background: var(--page); color: var(--text); --card: var(--surface); }
 .soft { background: var(--surface); color: var(--text); --card: #ffffff; }
+.hero { background: radial-gradient(70% 55% at 50% 92%, #e6f0ff 0%, rgba(230, 240, 255, 0) 70%), var(--page); }
+.wash { background: radial-gradient(80% 90% at 50% 0%, #dcebff 0%, var(--surface) 70%); }
+.blue {
+  background: linear-gradient(155deg, #0759d6 0%, #0a7cf5 55%, #2f9bff 100%); color: #fff;
+  --muted: rgba(255, 255, 255, .78); --hair: rgba(255, 255, 255, .24); --link: #fff;
+}
+.blue .grad { background: none; color: #bfe3ff; }
+.blue .eq b { color: #bfe3ff; }
 @media (max-width: 734px) { section { padding-block: 72px; } }
 
 .eyebrow { font-size: clamp(19px, 2.2vw, 24px); font-weight: 600; letter-spacing: .004em; color: var(--muted); margin: 0 0 10px; }
@@ -79,7 +87,12 @@ h3 { font-size: 24px; font-weight: 600; letter-spacing: -.01em; line-height: 1.1
 .sub { font-size: clamp(19px, 2vw, 22px); line-height: 1.42; color: var(--muted); max-width: 640px; margin: 22px auto 0; letter-spacing: .004em; }
 .sub strong { color: var(--text); font-weight: 600; }
 .links { display: flex; gap: 28px; justify-content: center; flex-wrap: wrap; margin-top: 26px; font-size: 19px; }
-.links a::after { content: " ›"; }
+.links a { display: inline-flex; align-items: center; gap: 8px; }
+.links a:hover { text-decoration: none; }
+.go { width: 24px; height: 12px; flex: none; overflow: visible; }
+.go path { stroke: currentColor; stroke-width: 2; stroke-linecap: round; opacity: .28; }
+.go circle { fill: currentColor; transition: transform .45s var(--ease); }
+.links a:hover .go circle, .links a:focus-visible .go circle { transform: translateX(14px); }
 .grad { background: linear-gradient(100deg, var(--grad-a), var(--grad-b)); -webkit-background-clip: text; background-clip: text; color: transparent; }
 .fine { font-size: 12px; color: var(--muted); line-height: 1.5; }
 
@@ -229,7 +242,9 @@ h3 { font-size: 24px; font-weight: 600; letter-spacing: -.01em; line-height: 1.1
 .vcard .k { font-size: 13px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; }
 .vcard.dead .k { color: var(--muted); }
 .vcard.dead h3 { text-decoration: line-through; text-decoration-thickness: 2px; color: var(--muted); }
-.vcard.kept .k { color: var(--dot); }
+.vcard.kept { background: linear-gradient(155deg, #0759d6, #0a7cf5 60%, #2f9bff); color: #fff; }
+.vcard.kept .k { color: #bfe3ff; }
+.vcard.kept p { color: rgba(255, 255, 255, .82); }
 .vcard h3 { font-size: clamp(26px, 3vw, 34px); margin: 10px 0 12px; letter-spacing: -.02em; }
 .vcard p { margin: 0; color: var(--muted); line-height: 1.5; }
 @media (max-width: 760px) { .verdicts { grid-template-columns: 1fr; } }
@@ -242,6 +257,7 @@ footer nav { display: flex; flex-wrap: wrap; gap: 8px 22px; font-size: 12px; pad
 footer nav a { color: var(--text); opacity: .8; }
 
 @media (prefers-reduced-motion: reduce) {
+  .go circle { transition: none; }
   html { scroll-behavior: auto; }
   .pulse { animation: none; opacity: 0; }
   .steps li { transition: none; }
@@ -265,8 +281,8 @@ footer nav a { color: var(--text); opacity: .8; }
     <h1>Anyway</h1>
     <p class="sub">The Google Maps of human achievement was never going to be about the map.</p>
     <div class="links">
-      <a href="#verdict">See the verdict</a>
-      <a href="https://github.com/sdukea/this-maps/tree/main/docs">Browse the research</a>
+      <a href="#verdict">See the verdict<svg class="go" viewBox="0 0 24 12" aria-hidden="true"><path d="M3 6h18"/><circle cx="5" cy="6" r="3"/></svg></a>
+      <a href="https://github.com/sdukea/this-maps/tree/main/docs">Browse the research<svg class="go" viewBox="0 0 24 12" aria-hidden="true"><path d="M3 6h18"/><circle cx="5" cy="6" r="3"/></svg></a>
     </div>
   </div>
   <svg class="hero-map" viewBox="0 0 1100 380" role="img" aria-label="A route from where you are to where you want to be, with the blue dot at the start">
@@ -286,7 +302,7 @@ footer nav a { color: var(--text); opacity: .8; }
 </section>
 
 <!-- VERDICT -->
-<section class="soft" id="verdict">
+<section class="soft wash" id="verdict">
   <div class="wrap">
     <p class="eyebrow">The verdict</p>
     <h2>Don’t build the map. <span class="grad">Build the blue dot.</span></h2>
@@ -325,7 +341,7 @@ footer nav a { color: var(--text); opacity: .8; }
 </section>
 
 <!-- INSIGHT -->
-<section class="soft" id="insight">
+<section class="blue" id="insight">
   <div class="wrap">
     <p class="eyebrow">The insight</p>
     <h2>A goal is a test <span class="grad">you can’t pass yet.</span></h2>
@@ -508,8 +524,8 @@ footer nav a { color: var(--text); opacity: .8; }
       <div class="vcard kept"><span class="k">Kept</span><h3>The GPS for one dated goal</h3><p>Measurement first, honest about readiness, and defended by outcome data. If people won’t be measured, this dies too, and the next idea is making self-measurement feel safe.</p></div>
     </div>
     <div class="links" style="margin-top:56px">
-      <a href="https://github.com/sdukea/this-maps/blob/main/docs/THESIS.md">Read the full thesis</a>
-      <a href="https://github.com/sdukea/this-maps/blob/main/docs/research/SOURCES.md">See all 29 sources</a>
+      <a href="https://github.com/sdukea/this-maps/blob/main/docs/THESIS.md">Read the full thesis<svg class="go" viewBox="0 0 24 12" aria-hidden="true"><path d="M3 6h18"/><circle cx="5" cy="6" r="3"/></svg></a>
+      <a href="https://github.com/sdukea/this-maps/blob/main/docs/research/SOURCES.md">See all 29 sources<svg class="go" viewBox="0 0 24 12" aria-hidden="true"><path d="M3 6h18"/><circle cx="5" cy="6" r="3"/></svg></a>
     </div>
   </div>
 </section>
