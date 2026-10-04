@@ -1,5 +1,5 @@
 <title>Kettle</title>
-<meta name="description" content="Kettle shows where you stand on a hard goal and whistles when you are ready.">
+<meta name="description" content="Coding interview prep that checks what you know in 15 minutes, then gives you 25 minutes of daily practice on your weak spots until you are ready.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
@@ -101,7 +101,8 @@ h3 { font-size: 24px; font-weight: 600; letter-spacing: -.01em; line-height: 1.1
 /* ---------- hero ---------- */
 .hero { padding-top: 160px; padding-bottom: 40px; overflow: hidden; }
 .hero .eyebrow { font-size: 17px; }
-.hero .sub { font-size: clamp(22px, 2.8vw, 30px); color: var(--text); font-weight: 600; letter-spacing: -.01em; max-width: 720px; }
+.hero .sub { font-size: clamp(22px, 2.8vw, 30px); color: var(--text); font-weight: 600; letter-spacing: -.01em; max-width: 720px; text-wrap: balance; }
+.hero .sub .rest { display: block; margin: 14px auto 0; max-width: 560px; font-size: clamp(17px, 1.7vw, 21px); font-weight: 400; line-height: 1.45; letter-spacing: .002em; color: var(--muted); text-wrap: pretty; }
 .hero-stage { position: relative; margin: 64px auto 0; max-width: 1100px; width: 100%; }
 .hero-map { width: 100%; aspect-ratio: 1100 / 380; display: block; overflow: visible; }
 .hero-map .plan { fill: none; stroke: var(--dot); stroke-width: 4; stroke-linecap: round; stroke-dasharray: 1 12; opacity: .45; }
@@ -306,7 +307,7 @@ footer nav a { color: var(--text); opacity: .8; }
   <div class="wrap">
     <p class="eyebrow">A product thesis</p>
     <h1>Kettle</h1>
-    <p class="sub">Know where you stand. Know when you’re ready.</p>
+    <p class="sub">Coding interview prep that starts with what you already know.<span class="rest">A 15-minute check finds your level. Then 25 minutes a day on your weak spots, until you’re ready.</span></p>
     <div class="links">
       <a href="#verdict">See the verdict<svg class="go" viewBox="0 0 24 12" aria-hidden="true"><path d="M3 6h18"/><circle cx="5" cy="6" r="3"/></svg></a>
       <a href="https://github.com/sdukea/kettle/tree/main/docs">Browse the research<svg class="go" viewBox="0 0 24 12" aria-hidden="true"><path d="M3 6h18"/><circle cx="5" cy="6" r="3"/></svg></a>
