@@ -41,8 +41,8 @@ tells them honestly when they've arrived. Start in one domain where arrival
 is externally defined, dated and expensive to miss, then add domains as the
 measurement layer generalizes.
 
-Working name for the abstraction: **Position.** The rest of this document
-uses it.
+The product is called **Anyway**. Its core idea is *position*: knowing
+where you actually stand.
 
 ---
 
@@ -126,7 +126,7 @@ Three non-obvious consequences:
 
 ## 4. The product
 
-**Position is a navigation system for one hard, dated goal.** You tell it
+**Anyway is a navigation system for one hard, dated goal.** You tell it
 the destination. It gives you an arrival test, fixes your position in about
 fifteen minutes, and from then on answers one question every time you open
 it: *what should I do right now?* It re-measures you as you go, reroutes
@@ -232,7 +232,7 @@ Only features rated D (extremely differentiated) or E (category-defining) in
 Full analysis is in [research/02](research/02-human-problem.md). The design
 rule is simple: **every motivational mechanism must run on true signals.**
 
-| Mechanism | Evidence | How Position uses it | The line we don't cross |
+| Mechanism | Evidence | How Anyway uses it | The line we don't cross |
 |---|---|---|---|
 | Self-efficacy from mastery experiences | Bandura 1977 (established) | Probes are calibrated so early ones are passable; wins are measured, not awarded | No fake wins |
 | Goal gradient | Kivetz et al. 2006: about 20% acceleration near the goal; illusory "bonus stamps" also work [F, S9] | Show distance to the arrival test, which really shrinks | We *don't* use the illusory-progress trick, even though it works |
@@ -328,7 +328,7 @@ template (with edits) → adaptive probe battery (coding with a runner,
 explain-aloud with transcription and rubric grading, bug-finding) → skill
 graph position → "Now" screen → weekly re-probe → readiness range →
 outcome report.
-*Proves:* users with Position improve measured position faster than their
+*Proves:* users with Anyway improve measured position faster than their
 own baseline period, and report outcomes.
 
 **What v1 deliberately lacks:** a chat home, calendar sync, social

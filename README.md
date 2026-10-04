@@ -1,14 +1,13 @@
-# Position
+# Anyway
 
-*Working name. The question: can we build the Google Maps of human
-achievement?*
+*The question: can we build the Google Maps of human achievement?*
 
 **Short answer:** not by drawing better maps. Plans are free now, and they
 were never the bottleneck. Maps won because of the **blue dot**: knowing
 where you are. For most goals, no product knows where you actually stand.
 
 > **A goal is a test you can't pass yet.**
-> Position compiles your goal into an arrival test, measures where you stand
+> Anyway compiles your goal into an arrival test, measures where you stand
 > in about fifteen minutes, tells you what you can skip, gives you the next
 > turn, re-measures as you go, and says honestly when you're ready.
 
