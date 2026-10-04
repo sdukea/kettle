@@ -22,17 +22,11 @@
   --glass-rim: rgba(255, 255, 255, .6);
   --glass-text: rgba(29, 29, 31, .86);
 
-  --night: #000000;
-  --night-card: #1d1d1f;
-  --night-text: #f5f5f7;
-  --night-muted: #a1a1a6;
-  --night-link: #2997ff;
-  --night-hair: rgba(255, 255, 255, .1);
 
   --dot: #0a84ff;
   --dot-soft: rgba(10, 132, 255, .16);
-  --grad-a: #2997ff;
-  --grad-b: #64d2ff;
+  --grad-a: #0066dd;
+  --grad-b: #2aa8f2;
   --red: #ff453a;
   --x-bg: #aeaeb2;
 
@@ -73,9 +67,8 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--dot); outline-o
 /* ---------- sections ---------- */
 section { padding-block: 120px; padding-inline: 22px; text-align: center; }
 .wrap { max-width: var(--col); margin: 0 auto; }
-.light { background: var(--page); color: var(--text); }
-.soft { background: var(--surface); color: var(--text); }
-.night { background: var(--night); color: var(--night-text); --muted: var(--night-muted); --link: var(--night-link); --hair: var(--night-hair); --card: var(--night-card); }
+.light { background: var(--page); color: var(--text); --card: var(--surface); }
+.soft { background: var(--surface); color: var(--text); --card: #ffffff; }
 @media (max-width: 734px) { section { padding-block: 72px; } }
 
 .eyebrow { font-size: clamp(19px, 2.2vw, 24px); font-weight: 600; letter-spacing: .004em; color: var(--muted); margin: 0 0 10px; }
@@ -85,7 +78,6 @@ h2 { font-size: clamp(38px, 6vw, 72px); font-weight: 700; letter-spacing: -.022e
 h3 { font-size: 24px; font-weight: 600; letter-spacing: -.01em; line-height: 1.17; }
 .sub { font-size: clamp(19px, 2vw, 22px); line-height: 1.42; color: var(--muted); max-width: 640px; margin: 22px auto 0; letter-spacing: .004em; }
 .sub strong { color: var(--text); font-weight: 600; }
-.night .sub strong { color: var(--night-text); }
 .links { display: flex; gap: 28px; justify-content: center; flex-wrap: wrap; margin-top: 26px; font-size: 19px; }
 .links a::after { content: " ›"; }
 .grad { background: linear-gradient(100deg, var(--grad-a), var(--grad-b)); -webkit-background-clip: text; background-clip: text; color: transparent; }
@@ -107,7 +99,6 @@ h3 { font-size: 24px; font-weight: 600; letter-spacing: -.01em; line-height: 1.1
 /* ---------- bento ---------- */
 .bento { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; margin-top: 64px; text-align: left; }
 .tile { background: var(--card); border-radius: 28px; padding: 32px 28px 30px; display: flex; flex-direction: column; gap: 12px; min-width: 0; }
-.soft .tile { background: var(--card); }
 .tile.wide { grid-column: span 2; }
 .tile .big { font-size: clamp(48px, 6vw, 72px); font-weight: 700; letter-spacing: -.03em; line-height: 1; font-variant-numeric: tabular-nums; }
 .tile p { margin: 0; color: var(--muted); font-size: 17px; line-height: 1.4; }
@@ -119,14 +110,14 @@ h3 { font-size: 24px; font-weight: 600; letter-spacing: -.01em; line-height: 1.1
 /* ---------- insight equation ---------- */
 .equation { margin: 72px auto 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; text-align: left; }
 .eq { border-top: 1px solid var(--hair); padding-top: 20px; min-width: 0; }
-.eq b { display: block; font-size: 13px; letter-spacing: .06em; text-transform: uppercase; color: var(--night-link); font-weight: 600; margin-bottom: 8px; }
-.eq h3 { color: var(--night-text); margin-bottom: 8px; }
+.eq b { display: block; font-size: 13px; letter-spacing: .06em; text-transform: uppercase; color: var(--dot); font-weight: 600; margin-bottom: 8px; }
+.eq h3 { margin-bottom: 8px; }
 .eq p { margin: 0; color: var(--muted); font-size: 16px; line-height: 1.45; }
 @media (max-width: 860px) { .equation { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 520px) { .equation { grid-template-columns: 1fr; } }
 
 /* ---------- scroll-scrubbed blue dot ---------- */
-.track { position: relative; height: 340vh; padding: 0; background: var(--surface); }
+.track { position: relative; height: 340vh; padding: 0; }
 .stage {
   position: sticky; top: 0; height: 100vh; height: 100svh; display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); gap: 48px; align-items: center;
@@ -138,9 +129,9 @@ h3 { font-size: 24px; font-weight: 600; letter-spacing: -.01em; line-height: 1.1
 .steps .k { font-size: 13px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--dot); }
 .steps h3 { font-size: clamp(24px, 2.6vw, 32px); margin: 4px 0 6px; letter-spacing: -.015em; }
 .steps p { margin: 0; color: var(--muted); font-size: 17px; max-width: 420px; }
-.mapcard { background: var(--card); border-radius: 32px; padding: 18px; box-shadow: 0 30px 80px rgba(0, 0, 0, .08); min-width: 0; }
+.mapcard { background: var(--card); border-radius: 32px; padding: 18px; min-width: 0; }
 .mapcard svg { display: block; width: 100%; height: auto; }
-.m-road { fill: none; stroke: var(--surface); stroke-width: 26; stroke-linecap: round; stroke-linejoin: round; }
+.m-road { fill: none; stroke: #e8e8ed; stroke-width: 26; stroke-linecap: round; stroke-linejoin: round; }
 .m-route { fill: none; stroke: var(--dot); stroke-width: 8; stroke-linecap: round; stroke-linejoin: round; }
 .m-skip { fill: none; stroke: var(--muted); stroke-width: 4; stroke-dasharray: 2 10; stroke-linecap: round; opacity: .5; }
 .m-node { fill: var(--card); stroke: var(--muted); stroke-width: 3; }
@@ -217,11 +208,11 @@ h3 { font-size: 24px; font-weight: 600; letter-spacing: -.01em; line-height: 1.1
 /* ---------- calibration chart ---------- */
 .calib { margin: 56px auto 0; max-width: 560px; }
 .calib svg { width: 100%; height: auto; display: block; }
-.calib .ax { stroke: var(--night-hair); stroke-width: 1; }
-.calib .ideal { stroke: var(--night-muted); stroke-width: 1.5; stroke-dasharray: 4 6; fill: none; }
+.calib .ax { stroke: var(--hair); stroke-width: 1; }
+.calib .ideal { stroke: var(--muted); stroke-width: 1.5; stroke-dasharray: 4 6; fill: none; }
 .calib .ours { stroke: var(--dot); stroke-width: 4; fill: none; stroke-linecap: round; stroke-linejoin: round; }
-.calib circle { fill: var(--dot); stroke: #000; stroke-width: 3; }
-.calib text { fill: var(--night-muted); font: 500 13px var(--font); }
+.calib circle { fill: var(--dot); stroke: var(--surface); stroke-width: 3; }
+.calib text { fill: var(--muted); font: 500 13px var(--font); }
 
 /* ---------- risks ---------- */
 .risks { margin: 56px auto 0; max-width: 760px; text-align: left; background: var(--card); border-radius: 28px; padding: 8px 28px; }
@@ -234,13 +225,13 @@ h3 { font-size: 24px; font-weight: 600; letter-spacing: -.01em; line-height: 1.1
 
 /* ---------- kill ---------- */
 .verdicts { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 64px; text-align: left; }
-.vcard { background: var(--night-card); border-radius: 28px; padding: 36px 32px; min-width: 0; }
+.vcard { background: var(--card); border-radius: 28px; padding: 36px 32px; min-width: 0; }
 .vcard .k { font-size: 13px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; }
-.vcard.dead .k { color: var(--night-muted); }
-.vcard.dead h3 { text-decoration: line-through; text-decoration-thickness: 2px; color: var(--night-muted); }
-.vcard.kept .k { color: var(--night-link); }
+.vcard.dead .k { color: var(--muted); }
+.vcard.dead h3 { text-decoration: line-through; text-decoration-thickness: 2px; color: var(--muted); }
+.vcard.kept .k { color: var(--dot); }
 .vcard h3 { font-size: clamp(26px, 3vw, 34px); margin: 10px 0 12px; letter-spacing: -.02em; }
-.vcard p { margin: 0; color: var(--night-muted); line-height: 1.5; }
+.vcard p { margin: 0; color: var(--muted); line-height: 1.5; }
 @media (max-width: 760px) { .verdicts { grid-template-columns: 1fr; } }
 
 /* ---------- footer ---------- */
@@ -295,7 +286,7 @@ footer nav a { color: var(--text); opacity: .8; }
 </section>
 
 <!-- VERDICT -->
-<section class="night" id="verdict">
+<section class="soft" id="verdict">
   <div class="wrap">
     <p class="eyebrow">The verdict</p>
     <h2>Don’t build the map. <span class="grad">Build the blue dot.</span></h2>
@@ -304,7 +295,7 @@ footer nav a { color: var(--text); opacity: .8; }
 </section>
 
 <!-- EVIDENCE -->
-<section class="soft">
+<section class="light">
   <div class="wrap">
     <p class="eyebrow">Why plans aren’t the bottleneck</p>
     <h2>People already have the plan. They still stop.</h2>
@@ -334,7 +325,7 @@ footer nav a { color: var(--text); opacity: .8; }
 </section>
 
 <!-- INSIGHT -->
-<section class="night" id="insight">
+<section class="soft" id="insight">
   <div class="wrap">
     <p class="eyebrow">The insight</p>
     <h2>A goal is a test <span class="grad">you can’t pass yet.</span></h2>
@@ -349,7 +340,7 @@ footer nav a { color: var(--text); opacity: .8; }
 </section>
 
 <!-- SCRUB -->
-<section class="track" id="product" aria-label="How Anyway navigates">
+<section class="track light" id="product" aria-label="How Anyway navigates">
   <div class="stage">
     <ol class="steps" id="steps">
       <li class="on"><div class="k">Fix</div><h3>Fifteen minutes to find you.</h3><p>Four to six short checks. A coding problem, a bug to find, a concept to explain out loud.</p></li>
@@ -381,7 +372,7 @@ footer nav a { color: var(--text); opacity: .8; }
 </section>
 
 <!-- HOLY SHIT MOMENT -->
-<section class="light">
+<section class="soft">
   <div class="split">
     <div>
       <p class="eyebrow">The moment</p>
@@ -410,7 +401,7 @@ footer nav a { color: var(--text); opacity: .8; }
 </section>
 
 <!-- PSYCHOLOGY -->
-<section class="soft">
+<section class="light">
   <div class="wrap">
     <p class="eyebrow">The psychological engine</p>
     <h2>Motivation that runs on true signals.</h2>
@@ -439,7 +430,7 @@ footer nav a { color: var(--text); opacity: .8; }
 </section>
 
 <!-- WEDGE -->
-<section class="night">
+<section class="soft">
   <div class="wrap">
     <p class="eyebrow">The first user</p>
     <h2>Start where arrival <span class="grad">has a date.</span></h2>
@@ -448,7 +439,7 @@ footer nav a { color: var(--text); opacity: .8; }
 </section>
 
 <!-- MOAT -->
-<section class="night" id="moat" style="padding-top:0">
+<section class="soft" id="moat" style="padding-top:0">
   <div class="wrap">
     <p class="eyebrow">The moat</p>
     <h2>When we say 70%, 70% pass.</h2>
@@ -508,7 +499,7 @@ footer nav a { color: var(--text); opacity: .8; }
 </section>
 
 <!-- KILL -->
-<section class="night" id="kill">
+<section class="light" id="kill">
   <div class="wrap">
     <p class="eyebrow">Kill this idea</p>
     <h2>One idea dies here. <span class="grad">One survives.</span></h2>
