@@ -11,6 +11,8 @@ where you are. For most goals, no product knows where you actually stand.
 > in about fifteen minutes, tells you what you can skip, gives you the next
 > turn, re-measures as you go, and says honestly when you're ready.
 
+**See it:** [sdukea.github.io/kettle](https://sdukea.github.io/kettle/)
+
 **Start with:** [docs/THESIS.md](docs/THESIS.md), the final strategic
 document (verdict, insight, product, wedge, MVP, moat, risks, and the "kill
 this idea" section).

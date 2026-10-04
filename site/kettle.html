@@ -1,5 +1,5 @@
 <title>Kettle</title>
-<meta name="description" content="A product thesis: the Google Maps of human achievement was never about the map.">
+<meta name="description" content="Kettle shows where you stand on a hard goal and whistles when you are ready.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
@@ -118,14 +118,14 @@ h3 { font-size: 24px; font-weight: 600; letter-spacing: -.01em; line-height: 1.1
 .hero-tag b { font-size: 15px; font-weight: 600; color: var(--text); letter-spacing: -.01em; }
 .hero-tag span { font-size: 12px; color: var(--dot); font-weight: 600; }
 .hero-tag.away { opacity: 0; transform: translate(calc(var(--ax) * -1), calc(-100% - 18px)); }
-.hero-tag.high { transform: translate(calc(var(--ax) * -1), calc(-100% - 66px)); }
-.hero-tag.high.away { transform: translate(calc(var(--ax) * -1), calc(-100% - 54px)); }
+.hero-tag.high { transform: translate(calc(-100% - 44px), -50%); }
+.hero-tag.high.away { transform: translate(calc(-100% - 32px), -50%); }
 @media (max-width: 600px) { .hero-stage { margin-top: 96px; } .hero-tag { padding: 6px 11px; } .hero-tag b { font-size: 12px; } .hero-tag span { font-size: 10px; } }
 .hero-map .road { fill: none; stroke: var(--hair); stroke-width: 22; stroke-linecap: round; }
 .hero-map .route { fill: none; stroke: var(--dot); stroke-width: 7; stroke-linecap: round; }
 .hero-map .grid { stroke: var(--hair); stroke-width: 1; }
 .hero-map .pin { fill: var(--text); }
-.steam path { fill: none; stroke: var(--muted); stroke-width: 3; stroke-linecap: round; opacity: 0; }
+.steam path { fill: none; stroke: var(--muted); stroke-width: 3.5; stroke-linecap: round; opacity: 0; }
 .steam.on path { animation: steam 1.8s var(--ease) infinite; }
 .steam.on path:nth-child(2) { animation-delay: .3s; }
 .steam.on path:nth-child(3) { animation-delay: .6s; }
@@ -306,7 +306,7 @@ footer nav a { color: var(--text); opacity: .8; }
   <div class="wrap">
     <p class="eyebrow">A product thesis</p>
     <h1>Kettle</h1>
-    <p class="sub">The Google Maps of human achievement was never going to be about the map.</p>
+    <p class="sub">Know where you stand. Know when you’re ready.</p>
     <div class="links">
       <a href="#verdict">See the verdict<svg class="go" viewBox="0 0 24 12" aria-hidden="true"><path d="M3 6h18"/><circle cx="5" cy="6" r="3"/></svg></a>
       <a href="https://github.com/sdukea/kettle/tree/main/docs">Browse the research<svg class="go" viewBox="0 0 24 12" aria-hidden="true"><path d="M3 6h18"/><circle cx="5" cy="6" r="3"/></svg></a>
@@ -326,9 +326,9 @@ footer nav a { color: var(--text); opacity: .8; }
     <circle cx="980" cy="66" r="7" fill="var(--page)"/>
     <text x="980" y="140" text-anchor="middle">Arrival test</text>
     <g class="steam" id="heroSteam" aria-hidden="true">
-      <path d="M968 34c-5-6 5-10 0-17"/>
-      <path d="M980 30c-5-6 5-10 0-17"/>
-      <path d="M992 34c-5-6 5-10 0-17"/>
+      <path d="M966 36c-7-8 7-13 0-22"/>
+      <path d="M980 30c-7-8 7-13 0-24"/>
+      <path d="M994 36c-7-8 7-13 0-22"/>
     </g>
     <g id="heroDot" transform="translate(120 300)">
       <circle class="pulse" r="22" fill="var(--dot)"/>
@@ -639,7 +639,7 @@ footer nav a { color: var(--text); opacity: .8; }
     tag.querySelector('b').textContent = stops[i].title;
     tag.querySelector('span').textContent = stops[i].note;
     tag.style.left = (p.x / 1100 * 100) + '%';
-    tag.style.top = (p.y / 380 * 100) + '%';
+    tag.style.top = ((i === stops.length - 1 ? 62 : p.y) / 380 * 100) + '%';
     // Anchor the label so it never runs off the edge on narrow screens.
     tag.style.setProperty('--ax', (12 + 76 * p.x / 1100).toFixed(1) + '%');
     tag.classList.toggle('high', i === stops.length - 1);
