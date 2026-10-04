@@ -1,4 +1,4 @@
-<title>Anyway</title>
+<title>Kettle</title>
 <meta name="description" content="A product thesis: the Google Maps of human achievement was never about the map.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -57,7 +57,9 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--dot); outline-o
   box-shadow: 0 8px 32px rgba(0, 0, 0, .1), inset 0 1px 0 var(--glass-rim), inset 0 0 0 .5px var(--glass-rim);
 }
 .nav .brand { display: flex; align-items: center; gap: 8px; font-weight: 600; font-size: 14px; color: var(--glass-text); margin-right: 10px; white-space: nowrap; }
-.nav .brand i { width: 10px; height: 10px; border-radius: 50%; background: var(--dot); box-shadow: 0 0 0 4px var(--dot-soft); }
+.mark-k { width: 20px; height: 20px; }
+.mark-k circle { fill: var(--dot); }
+.mark-k .w { fill: none; stroke: var(--dot); stroke-width: 1.6; stroke-linecap: round; opacity: .55; }
 .nav a.l { font-size: 12px; color: var(--glass-text); padding: 8px 10px; border-radius: 999px; white-space: nowrap; }
 .nav a.l:hover { text-decoration: none; background: var(--hair); }
 .nav a.cta { font-size: 12px; font-weight: 500; color: #fff; background: var(--dot); padding: 7px 14px; border-radius: 999px; white-space: nowrap; }
@@ -106,7 +108,7 @@ h3 { font-size: 24px; font-weight: 600; letter-spacing: -.01em; line-height: 1.1
 .hero-map .stop { fill: var(--page); stroke: var(--dot); stroke-width: 3; transition: fill .4s var(--ease); }
 .hero-map .stop.done { fill: var(--dot); }
 .hero-tag {
-  position: absolute; transform: translate(-50%, calc(-100% - 30px)); pointer-events: none;
+  position: absolute; --ax: 50%; transform: translate(calc(var(--ax) * -1), calc(-100% - 30px)); pointer-events: none;
   display: flex; flex-direction: column; align-items: center; gap: 1px; white-space: nowrap;
   padding: 9px 16px; border-radius: 16px; background: var(--glass);
   -webkit-backdrop-filter: blur(20px) saturate(180%); backdrop-filter: blur(20px) saturate(180%);
@@ -115,14 +117,19 @@ h3 { font-size: 24px; font-weight: 600; letter-spacing: -.01em; line-height: 1.1
 }
 .hero-tag b { font-size: 15px; font-weight: 600; color: var(--text); letter-spacing: -.01em; }
 .hero-tag span { font-size: 12px; color: var(--dot); font-weight: 600; }
-.hero-tag.away { opacity: 0; transform: translate(-50%, calc(-100% - 18px)); }
-.hero-tag.high { transform: translate(-50%, calc(-100% - 66px)); }
-.hero-tag.high.away { transform: translate(-50%, calc(-100% - 54px)); }
-@media (max-width: 600px) { .hero-tag { padding: 6px 11px; } .hero-tag b { font-size: 12px; } .hero-tag span { font-size: 10px; } }
+.hero-tag.away { opacity: 0; transform: translate(calc(var(--ax) * -1), calc(-100% - 18px)); }
+.hero-tag.high { transform: translate(calc(var(--ax) * -1), calc(-100% - 66px)); }
+.hero-tag.high.away { transform: translate(calc(var(--ax) * -1), calc(-100% - 54px)); }
+@media (max-width: 600px) { .hero-stage { margin-top: 96px; } .hero-tag { padding: 6px 11px; } .hero-tag b { font-size: 12px; } .hero-tag span { font-size: 10px; } }
 .hero-map .road { fill: none; stroke: var(--hair); stroke-width: 22; stroke-linecap: round; }
 .hero-map .route { fill: none; stroke: var(--dot); stroke-width: 7; stroke-linecap: round; }
 .hero-map .grid { stroke: var(--hair); stroke-width: 1; }
 .hero-map .pin { fill: var(--text); }
+.steam path { fill: none; stroke: var(--muted); stroke-width: 3; stroke-linecap: round; opacity: 0; }
+.steam.on path { animation: steam 1.8s var(--ease) infinite; }
+.steam.on path:nth-child(2) { animation-delay: .3s; }
+.steam.on path:nth-child(3) { animation-delay: .6s; }
+@keyframes steam { 0% { opacity: 0; transform: translateY(6px); } 35% { opacity: .75; } 100% { opacity: 0; transform: translateY(-16px); } }
 .hero-map text { fill: var(--muted); font: 600 13px var(--font); }
 .pulse { transform-origin: 0 0; animation: pulse 2.4s var(--ease) infinite; }
 @keyframes pulse { 0% { transform: scale(.6); opacity: .7; } 100% { transform: scale(2.4); opacity: 0; } }
@@ -145,7 +152,8 @@ h3 { font-size: 24px; font-weight: 600; letter-spacing: -.01em; line-height: 1.1
 .eq b { display: block; font-size: 13px; letter-spacing: .06em; text-transform: uppercase; color: var(--dot); font-weight: 600; margin-bottom: 8px; }
 .eq h3 { margin-bottom: 8px; }
 .eq p { margin: 0; color: var(--muted); font-size: 16px; line-height: 1.45; }
-@media (max-width: 860px) { .equation { grid-template-columns: repeat(2, 1fr); } }
+.equation.three { grid-template-columns: repeat(3, 1fr); }
+@media (max-width: 860px) { .equation, .equation.three { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 520px) { .equation { grid-template-columns: 1fr; } }
 
 /* ---------- scroll-scrubbed blue dot ---------- */
@@ -243,7 +251,7 @@ h3 { font-size: 24px; font-weight: 600; letter-spacing: -.01em; line-height: 1.1
 .calib .ax { stroke: var(--hair); stroke-width: 1; }
 .calib .ideal { stroke: var(--muted); stroke-width: 1.5; stroke-dasharray: 4 6; fill: none; }
 .calib .ours { stroke: var(--dot); stroke-width: 4; fill: none; stroke-linecap: round; stroke-linejoin: round; }
-.calib circle { fill: var(--dot); stroke: var(--surface); stroke-width: 3; }
+.calib circle { fill: var(--dot); stroke: var(--page); stroke-width: 3; }
 .calib text { fill: var(--muted); font: 500 13px var(--font); }
 
 /* ---------- risks ---------- */
@@ -269,7 +277,7 @@ h3 { font-size: 24px; font-weight: 600; letter-spacing: -.01em; line-height: 1.1
 @media (max-width: 760px) { .verdicts { grid-template-columns: 1fr; } }
 
 /* ---------- footer ---------- */
-footer { background: var(--surface); padding: 40px 22px calc(40px + env(safe-area-inset-bottom, 0px)); }
+footer { border-top: .5px solid var(--hair); background: var(--surface); padding: 40px 22px calc(40px + env(safe-area-inset-bottom, 0px)); }
 footer .wrap { display: flex; flex-direction: column; gap: 14px; }
 footer p { margin: 0; font-size: 12px; color: var(--muted); line-height: 1.6; max-width: 820px; }
 footer nav { display: flex; flex-wrap: wrap; gap: 8px 22px; font-size: 12px; padding-top: 14px; border-top: .5px solid var(--hair); }
@@ -284,24 +292,24 @@ footer nav a { color: var(--text); opacity: .8; }
 </style>
 
 <nav class="nav" aria-label="Sections">
-  <span class="brand"><i aria-hidden="true"></i>Anyway</span>
+  <span class="brand"><svg class="mark-k" viewBox="0 0 20 20" aria-hidden="true"><path class="w" d="M7.5 7.5c-1.2-1.4 1.2-2.4 0-4"/><path class="w" d="M12.5 7.5c-1.2-1.4 1.2-2.4 0-4"/><circle cx="10" cy="13.5" r="4.5"/></svg>Kettle</span>
   <a class="l" href="#verdict">Verdict</a>
   <a class="l" href="#insight">Insight</a>
   <a class="l" href="#product">Product</a>
   <a class="l" href="#moat">Moat</a>
   <a class="l" href="#kill">Kill test</a>
-  <a class="cta" href="https://github.com/sdukea/this-maps/blob/main/docs/THESIS.md">Read the thesis</a>
+  <a class="cta" href="https://github.com/sdukea/kettle/blob/main/docs/THESIS.md">Read the thesis</a>
 </nav>
 
 <!-- HERO -->
 <section class="light hero">
   <div class="wrap">
     <p class="eyebrow">A product thesis</p>
-    <h1>Anyway</h1>
+    <h1>Kettle</h1>
     <p class="sub">The Google Maps of human achievement was never going to be about the map.</p>
     <div class="links">
       <a href="#verdict">See the verdict<svg class="go" viewBox="0 0 24 12" aria-hidden="true"><path d="M3 6h18"/><circle cx="5" cy="6" r="3"/></svg></a>
-      <a href="https://github.com/sdukea/this-maps/tree/main/docs">Browse the research<svg class="go" viewBox="0 0 24 12" aria-hidden="true"><path d="M3 6h18"/><circle cx="5" cy="6" r="3"/></svg></a>
+      <a href="https://github.com/sdukea/kettle/tree/main/docs">Browse the research<svg class="go" viewBox="0 0 24 12" aria-hidden="true"><path d="M3 6h18"/><circle cx="5" cy="6" r="3"/></svg></a>
     </div>
   </div>
   <div class="hero-stage">
@@ -317,6 +325,11 @@ footer nav a { color: var(--text); opacity: .8; }
     <path class="pin" d="M980 90 m0 -44 a20 20 0 0 1 20 20 c0 15 -20 30 -20 30 s-20 -15 -20 -30 a20 20 0 0 1 20 -20z"/>
     <circle cx="980" cy="66" r="7" fill="var(--page)"/>
     <text x="980" y="140" text-anchor="middle">Arrival test</text>
+    <g class="steam" id="heroSteam" aria-hidden="true">
+      <path d="M968 34c-5-6 5-10 0-17"/>
+      <path d="M980 30c-5-6 5-10 0-17"/>
+      <path d="M992 34c-5-6 5-10 0-17"/>
+    </g>
     <g id="heroDot" transform="translate(120 300)">
       <circle class="pulse" r="22" fill="var(--dot)"/>
       <circle r="13" fill="var(--dot)" stroke="#fff" stroke-width="5"/>
@@ -381,13 +394,13 @@ footer nav a { color: var(--text); opacity: .8; }
 </section>
 
 <!-- SCRUB -->
-<section class="track light" id="product" aria-label="How Anyway navigates">
+<section class="track light" id="product" aria-label="How Kettle navigates">
   <div class="stage">
     <ol class="steps" id="steps">
       <li class="on"><div class="k">Fix</div><h3>Fifteen minutes to find you.</h3><p>Four to six short checks. A coding problem, a bug to find, a concept to explain out loud.</p></li>
       <li><div class="k">Skip</div><h3>It starts with what you can skip.</h3><p>The first result is time back. Then your two real gaps.</p></li>
       <li><div class="k">Reroute</div><h3>Missed a week? It reroutes.</h3><p>No streak to break. A new ETA and the smallest useful session.</p></li>
-      <li><div class="k">Arrive</div><h3>“You’re ready. Go apply.”</h3><p>A stop signal, backed by evidence. No content product has a reason to say it.</p></li>
+      <li><div class="k">Arrive</div><h3>It whistles when you’re ready.</h3><p>“You’re ready. Go apply.” A stop signal, backed by evidence. No content product has a reason to say it.</p></li>
     </ol>
     <div class="mapcard">
       <svg id="map" viewBox="0 0 600 440" role="img" aria-label="Route map: the blue dot moves toward the arrival test as evidence accumulates">
@@ -412,8 +425,22 @@ footer nav a { color: var(--text); opacity: .8; }
   </div>
 </section>
 
+<!-- NAME -->
+<section class="soft" id="name">
+  <div class="wrap">
+    <p class="eyebrow">The name</p>
+    <h2>Maps tell you where you are. <span class="grad">A kettle tells you when it’s ready.</span></h2>
+    <p class="sub">Kettle does both. It shows exactly where you stand on the route, gives you the next turn, and whistles when you’ve arrived. Until then it stays honest: <strong>still heating.</strong></p>
+    <div class="equation three">
+      <div class="eq"><b>The blue dot</b><h3>Where you are</h3><p>Measured from short checks, never from hours watched.</p></div>
+      <div class="eq"><b>The next turn</b><h3>What to do now</h3><p>One session, sized to the minutes you have today.</p></div>
+      <div class="eq"><b>The whistle</b><h3>When you’re ready</h3><p>An honest signal to stop studying and go take the real test.</p></div>
+    </div>
+  </div>
+</section>
+
 <!-- HOLY SHIT MOMENT -->
-<section class="soft">
+<section class="light">
   <div class="split">
     <div>
       <p class="eyebrow">The moment</p>
@@ -442,7 +469,7 @@ footer nav a { color: var(--text); opacity: .8; }
 </section>
 
 <!-- PSYCHOLOGY -->
-<section class="light">
+<section class="soft">
   <div class="wrap">
     <p class="eyebrow">The psychological engine</p>
     <h2>Motivation that runs on true signals.</h2>
@@ -471,7 +498,7 @@ footer nav a { color: var(--text); opacity: .8; }
 </section>
 
 <!-- WEDGE -->
-<section class="soft">
+<section class="light">
   <div class="wrap">
     <p class="eyebrow">The first user</p>
     <h2>Start where arrival <span class="grad">has a date.</span></h2>
@@ -480,7 +507,7 @@ footer nav a { color: var(--text); opacity: .8; }
 </section>
 
 <!-- MOAT -->
-<section class="soft" id="moat" style="padding-top:0">
+<section class="light" id="moat" style="padding-top:0">
   <div class="wrap">
     <p class="eyebrow">The moat</p>
     <h2>When we say 70%, 70% pass.</h2>
@@ -509,7 +536,7 @@ footer nav a { color: var(--text); opacity: .8; }
 </section>
 
 <!-- MVP RAIL -->
-<section class="light">
+<section class="soft">
   <div class="wrap">
     <p class="eyebrow">What to build first</p>
     <h2>Prove people will be measured.</h2>
@@ -524,7 +551,7 @@ footer nav a { color: var(--text); opacity: .8; }
 </section>
 
 <!-- RISKS -->
-<section class="soft">
+<section class="light">
   <div class="wrap">
     <p class="eyebrow">What could break it</p>
     <h2>The biggest risk is human.</h2>
@@ -540,7 +567,7 @@ footer nav a { color: var(--text); opacity: .8; }
 </section>
 
 <!-- KILL -->
-<section class="light" id="kill">
+<section class="soft" id="kill">
   <div class="wrap">
     <p class="eyebrow">Kill this idea</p>
     <h2>One idea dies here. <span class="grad">One survives.</span></h2>
@@ -549,8 +576,8 @@ footer nav a { color: var(--text); opacity: .8; }
       <div class="vcard kept"><span class="k">Kept</span><h3>The GPS for one dated goal</h3><p>Measurement first, honest about readiness, and defended by outcome data. If people won’t be measured, this dies too, and the next idea is making self-measurement feel safe.</p></div>
     </div>
     <div class="links" style="margin-top:56px">
-      <a href="https://github.com/sdukea/this-maps/blob/main/docs/THESIS.md">Read the full thesis<svg class="go" viewBox="0 0 24 12" aria-hidden="true"><path d="M3 6h18"/><circle cx="5" cy="6" r="3"/></svg></a>
-      <a href="https://github.com/sdukea/this-maps/blob/main/docs/research/SOURCES.md">See all 29 sources<svg class="go" viewBox="0 0 24 12" aria-hidden="true"><path d="M3 6h18"/><circle cx="5" cy="6" r="3"/></svg></a>
+      <a href="https://github.com/sdukea/kettle/blob/main/docs/THESIS.md">Read the full thesis<svg class="go" viewBox="0 0 24 12" aria-hidden="true"><path d="M3 6h18"/><circle cx="5" cy="6" r="3"/></svg></a>
+      <a href="https://github.com/sdukea/kettle/blob/main/docs/research/SOURCES.md">See all 29 sources<svg class="go" viewBox="0 0 24 12" aria-hidden="true"><path d="M3 6h18"/><circle cx="5" cy="6" r="3"/></svg></a>
     </div>
   </div>
 </section>
@@ -560,14 +587,14 @@ footer nav a { color: var(--text); opacity: .8; }
     <p>Desk research from October 2026: about 30 web searches plus targeted reads. No user interviews yet. Reddit was not accessible, so user language comes from Hacker News, dev.to and app reviews. Some market figures are secondary and marked as such in the sources. Every hypothesis is untested until the concierge test runs.</p>
     <p>Ananya and the screens shown are illustrations. The calibration chart is a target, not a result.</p>
     <nav aria-label="Documents">
-      <a href="https://github.com/sdukea/this-maps/blob/main/docs/research/01-market.md">Market</a>
-      <a href="https://github.com/sdukea/this-maps/blob/main/docs/research/02-human-problem.md">Human problem</a>
-      <a href="https://github.com/sdukea/this-maps/blob/main/docs/research/03-models-and-moments.md">Models</a>
-      <a href="https://github.com/sdukea/this-maps/blob/main/docs/research/04-engine.md">Engine</a>
-      <a href="https://github.com/sdukea/this-maps/blob/main/docs/research/05-experience.md">Experience</a>
-      <a href="https://github.com/sdukea/this-maps/blob/main/docs/research/06-features.md">Features</a>
-      <a href="https://github.com/sdukea/this-maps/blob/main/docs/research/07-company.md">Company</a>
-      <a href="https://github.com/sdukea/this-maps/blob/main/docs/research/08-build.md">Build</a>
+      <a href="https://github.com/sdukea/kettle/blob/main/docs/research/01-market.md">Market</a>
+      <a href="https://github.com/sdukea/kettle/blob/main/docs/research/02-human-problem.md">Human problem</a>
+      <a href="https://github.com/sdukea/kettle/blob/main/docs/research/03-models-and-moments.md">Models</a>
+      <a href="https://github.com/sdukea/kettle/blob/main/docs/research/04-engine.md">Engine</a>
+      <a href="https://github.com/sdukea/kettle/blob/main/docs/research/05-experience.md">Experience</a>
+      <a href="https://github.com/sdukea/kettle/blob/main/docs/research/06-features.md">Features</a>
+      <a href="https://github.com/sdukea/kettle/blob/main/docs/research/07-company.md">Company</a>
+      <a href="https://github.com/sdukea/kettle/blob/main/docs/research/08-build.md">Build</a>
     </nav>
   </div>
 </footer>
@@ -579,6 +606,7 @@ footer nav a { color: var(--text); opacity: .8; }
   const tag = document.getElementById('heroTag');
   const stopsG = document.getElementById('heroStops');
   const svg = document.getElementById('heroMap');
+  const steam = document.getElementById('heroSteam');
   if (!route || !dot) return;
   const L = route.getTotalLength();
   // Each stop is a moment from the product: where the dot rests and what it learned.
@@ -587,7 +615,7 @@ footer nav a { color: var(--text); opacity: .8; }
     { at: .27,  title: 'Skipped 60%',      note: 'Already known',       dwell: 1500 },
     { at: .52,  title: 'Gap closed',       note: 'Data structures',     dwell: 1500 },
     { at: .76,  title: 'Missed a week',    note: 'Rerouted, no guilt',  dwell: 1700 },
-    { at: 1,    title: 'Ready',            note: 'Go apply',            dwell: 2800 }
+    { at: 1,    title: 'Ready',            note: 'It whistles',         dwell: 3200 }
   ];
   const ns = 'http://www.w3.org/2000/svg';
   const marks = stops.slice(1, -1).map(st => {
@@ -612,7 +640,10 @@ footer nav a { color: var(--text); opacity: .8; }
     tag.querySelector('span').textContent = stops[i].note;
     tag.style.left = (p.x / 1100 * 100) + '%';
     tag.style.top = (p.y / 380 * 100) + '%';
+    // Anchor the label so it never runs off the edge on narrow screens.
+    tag.style.setProperty('--ax', (12 + 76 * p.x / 1100).toFixed(1) + '%');
     tag.classList.toggle('high', i === stops.length - 1);
+    steam.classList.toggle('on', i === stops.length - 1);
     tag.classList.remove('away');
   }
 
@@ -639,6 +670,7 @@ footer nav a { color: var(--text); opacity: .8; }
     } else if (phase === 'reset') {
       const k = Math.min(1, el / 700);
       dot.style.opacity = 1 - k;
+      steam.classList.remove('on');
       if (k === 1) { i = 0; place(0); dot.style.opacity = 1; phase = 'dwell'; t0 = now; show(0, route.getPointAtLength(0)); }
     }
     raf = requestAnimationFrame(frame);

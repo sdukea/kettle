@@ -1,4 +1,4 @@
-# Anyway
+# Kettle
 
 *The question: can we build the Google Maps of human achievement?*
 
@@ -7,7 +7,7 @@ were never the bottleneck. Maps won because of the **blue dot**: knowing
 where you are. For most goals, no product knows where you actually stand.
 
 > **A goal is a test you can't pass yet.**
-> Anyway compiles your goal into an arrival test, measures where you stand
+> Kettle compiles your goal into an arrival test, measures where you stand
 > in about fifteen minutes, tells you what you can skip, gives you the next
 > turn, re-measures as you go, and says honestly when you're ready.
 
