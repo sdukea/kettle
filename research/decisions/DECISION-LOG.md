@@ -68,3 +68,16 @@ is for research and strategy.
   explicitly does not recommend one.
 - **Pending:** **the founder's choice of opportunity.** The next entry here
   should record that choice, the reasoning, and the validation start date.
+
+### D7: Founder chose Opportunity 1, Nue (2026-10-04)
+
+- **Decision:** pursue Nue, re-targeted by the research: placement-season
+  sheet grinders in Bangalore, cold re-solves as the core review loop, and an
+  opt-in public card of observed facts as the adoption mechanism.
+- **What carries over from the research:** the binding kill criteria in
+  [TOP-5 §1.15](../opportunities/TOP-5.md), and the risk that retention tools
+  don't spread [S26], which is now the main thing Beta-0 must disprove.
+- **Next:** [docs/13 — Product spec](../../docs/13-product-spec.md) and
+  [docs/14 — Engineering roadmap](../../docs/14-engineering-roadmap.md). The
+  Reddit pass and problem interviews run in parallel with the capture spike,
+  before any product code beyond the spike.
