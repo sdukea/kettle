@@ -1,4 +1,4 @@
-<title>Kettle</title>
+<title>Pillow</title>
 <meta name="description" content="Coding interview prep that checks what you know in 15 minutes, then gives you 25 minutes of daily practice on your weak spots until you are ready.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -59,7 +59,7 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--dot); outline-o
 .nav .brand { display: flex; align-items: center; gap: 8px; font-weight: 600; font-size: 14px; color: var(--glass-text); margin-right: 10px; white-space: nowrap; }
 .mark-k { width: 20px; height: 20px; }
 .mark-k circle { fill: var(--dot); }
-.mark-k .w { fill: none; stroke: var(--dot); stroke-width: 1.6; stroke-linecap: round; opacity: .55; }
+.mark-k .p { fill: var(--dot-soft); stroke: var(--dot); stroke-width: 1.5; stroke-linejoin: round; }
 .nav a.l { font-size: 12px; color: var(--glass-text); padding: 8px 10px; border-radius: 999px; white-space: nowrap; }
 .nav a.l:hover { text-decoration: none; background: var(--hair); }
 .nav a.cta { font-size: 12px; font-weight: 500; color: #fff; background: var(--dot); padding: 7px 14px; border-radius: 999px; white-space: nowrap; }
@@ -126,11 +126,10 @@ h3 { font-size: 24px; font-weight: 600; letter-spacing: -.01em; line-height: 1.1
 .hero-map .route { fill: none; stroke: var(--dot); stroke-width: 7; stroke-linecap: round; }
 .hero-map .grid { stroke: var(--hair); stroke-width: 1; }
 .hero-map .pin { fill: var(--text); }
-.steam path { fill: none; stroke: var(--muted); stroke-width: 3.5; stroke-linecap: round; opacity: 0; }
-.steam.on path { animation: steam 1.8s var(--ease) infinite; }
-.steam.on path:nth-child(2) { animation-delay: .3s; }
-.steam.on path:nth-child(3) { animation-delay: .6s; }
-@keyframes steam { 0% { opacity: 0; transform: translateY(6px); } 35% { opacity: .75; } 100% { opacity: 0; transform: translateY(-16px); } }
+.settle circle { fill: none; stroke: var(--dot); stroke-width: 2; opacity: 0; transform-box: fill-box; transform-origin: center; }
+.settle.on circle { animation: settle 2.6s var(--ease) infinite; }
+.settle.on circle:nth-child(2) { animation-delay: 1.3s; }
+@keyframes settle { 0% { opacity: .45; transform: scale(.7); } 100% { opacity: 0; transform: scale(2.1); } }
 .hero-map text { fill: var(--muted); font: 600 13px var(--font); }
 .pulse { transform-origin: 0 0; animation: pulse 2.4s var(--ease) infinite; }
 @keyframes pulse { 0% { transform: scale(.6); opacity: .7; } 100% { transform: scale(2.4); opacity: 0; } }
@@ -293,24 +292,24 @@ footer nav a { color: var(--text); opacity: .8; }
 </style>
 
 <nav class="nav" aria-label="Sections">
-  <span class="brand"><svg class="mark-k" viewBox="0 0 20 20" aria-hidden="true"><path class="w" d="M7.5 7.5c-1.2-1.4 1.2-2.4 0-4"/><path class="w" d="M12.5 7.5c-1.2-1.4 1.2-2.4 0-4"/><circle cx="10" cy="13.5" r="4.5"/></svg>Kettle</span>
+  <span class="brand"><svg class="mark-k" viewBox="0 0 20 20" aria-hidden="true"><path class="p" d="M3.5 5.5Q10 3 16.5 5.5Q18 10 16.5 14.5Q10 17 3.5 14.5Q2 10 3.5 5.5Z"/><circle cx="10" cy="10" r="2.8"/></svg>Pillow</span>
   <a class="l" href="#verdict">Verdict</a>
   <a class="l" href="#insight">Insight</a>
   <a class="l" href="#product">Product</a>
   <a class="l" href="#moat">Moat</a>
   <a class="l" href="#kill">Kill test</a>
-  <a class="cta" href="https://github.com/sdukea/kettle/blob/main/docs/THESIS.md">Read the thesis</a>
+  <a class="cta" href="https://github.com/sdukea/pillow/blob/main/docs/THESIS.md">Read the thesis</a>
 </nav>
 
 <!-- HERO -->
 <section class="light hero">
   <div class="wrap">
     <p class="eyebrow">A product thesis</p>
-    <h1>Kettle</h1>
+    <h1>Pillow</h1>
     <p class="sub">Coding interview prep that starts with what you already know.<span class="rest">A 15-minute check finds your level. Then 25 minutes a day on your weak spots, until you’re ready.</span></p>
     <div class="links">
       <a href="#verdict">See the verdict<svg class="go" viewBox="0 0 24 12" aria-hidden="true"><path d="M3 6h18"/><circle cx="5" cy="6" r="3"/></svg></a>
-      <a href="https://github.com/sdukea/kettle/tree/main/docs">Browse the research<svg class="go" viewBox="0 0 24 12" aria-hidden="true"><path d="M3 6h18"/><circle cx="5" cy="6" r="3"/></svg></a>
+      <a href="https://github.com/sdukea/pillow/tree/main/docs">Browse the research<svg class="go" viewBox="0 0 24 12" aria-hidden="true"><path d="M3 6h18"/><circle cx="5" cy="6" r="3"/></svg></a>
     </div>
   </div>
   <div class="hero-stage">
@@ -326,10 +325,9 @@ footer nav a { color: var(--text); opacity: .8; }
     <path class="pin" d="M980 90 m0 -44 a20 20 0 0 1 20 20 c0 15 -20 30 -20 30 s-20 -15 -20 -30 a20 20 0 0 1 20 -20z"/>
     <circle cx="980" cy="66" r="7" fill="var(--page)"/>
     <text x="980" y="140" text-anchor="middle">Arrival test</text>
-    <g class="steam" id="heroSteam" aria-hidden="true">
-      <path d="M966 36c-7-8 7-13 0-22"/>
-      <path d="M980 30c-7-8 7-13 0-24"/>
-      <path d="M994 36c-7-8 7-13 0-22"/>
+    <g class="settle" id="heroSettle" aria-hidden="true">
+      <circle cx="980" cy="66" r="26"/>
+      <circle cx="980" cy="66" r="26"/>
     </g>
     <g id="heroDot" transform="translate(120 300)">
       <circle class="pulse" r="22" fill="var(--dot)"/>
@@ -395,13 +393,13 @@ footer nav a { color: var(--text); opacity: .8; }
 </section>
 
 <!-- SCRUB -->
-<section class="track light" id="product" aria-label="How Kettle navigates">
+<section class="track light" id="product" aria-label="How Pillow navigates">
   <div class="stage">
     <ol class="steps" id="steps">
       <li class="on"><div class="k">Fix</div><h3>Fifteen minutes to find you.</h3><p>Four to six short checks. A coding problem, a bug to find, a concept to explain out loud.</p></li>
       <li><div class="k">Skip</div><h3>It starts with what you can skip.</h3><p>The first result is time back. Then your two real gaps.</p></li>
       <li><div class="k">Reroute</div><h3>Missed a week? It reroutes.</h3><p>No streak to break. A new ETA and the smallest useful session.</p></li>
-      <li><div class="k">Arrive</div><h3>It whistles when you’re ready.</h3><p>“You’re ready. Go apply.” A stop signal, backed by evidence. No content product has a reason to say it.</p></li>
+      <li><div class="k">Arrive</div><h3>Then you can rest easy.</h3><p>“You’re ready. Go apply.” A stop signal, backed by evidence. No content product has a reason to say it.</p></li>
     </ol>
     <div class="mapcard">
       <svg id="map" viewBox="0 0 600 440" role="img" aria-label="Route map: the blue dot moves toward the arrival test as evidence accumulates">
@@ -430,12 +428,12 @@ footer nav a { color: var(--text); opacity: .8; }
 <section class="soft" id="name">
   <div class="wrap">
     <p class="eyebrow">The name</p>
-    <h2>Maps tell you where you are. <span class="grad">A kettle tells you when it’s ready.</span></h2>
-    <p class="sub">Kettle does both. It shows exactly where you stand on the route, gives you the next turn, and whistles when you’ve arrived. Until then it stays honest: <strong>still heating.</strong></p>
+    <h2>Know where you stand. <span class="grad">Then rest easy.</span></h2>
+    <p class="sub">Most interview stress is not knowing. Pillow shows exactly where you stand, gives you the next step, and tells you honestly when you’re ready, so you can <strong>stop cramming and sleep.</strong></p>
     <div class="equation three">
       <div class="eq"><b>The blue dot</b><h3>Where you are</h3><p>Measured from short checks, never from hours watched.</p></div>
-      <div class="eq"><b>The next turn</b><h3>What to do now</h3><p>One session, sized to the minutes you have today.</p></div>
-      <div class="eq"><b>The whistle</b><h3>When you’re ready</h3><p>An honest signal to stop studying and go take the real test.</p></div>
+      <div class="eq"><b>The next step</b><h3>What to do now</h3><p>One session, sized to the minutes you have today.</p></div>
+      <div class="eq"><b>The rest</b><h3>When you’re ready</h3><p>An honest signal to stop studying, sleep well, and go take the real test.</p></div>
     </div>
   </div>
 </section>
@@ -577,8 +575,8 @@ footer nav a { color: var(--text); opacity: .8; }
       <div class="vcard kept"><span class="k">Kept</span><h3>The GPS for one dated goal</h3><p>Measurement first, honest about readiness, and defended by outcome data. If people won’t be measured, this dies too, and the next idea is making self-measurement feel safe.</p></div>
     </div>
     <div class="links" style="margin-top:56px">
-      <a href="https://github.com/sdukea/kettle/blob/main/docs/THESIS.md">Read the full thesis<svg class="go" viewBox="0 0 24 12" aria-hidden="true"><path d="M3 6h18"/><circle cx="5" cy="6" r="3"/></svg></a>
-      <a href="https://github.com/sdukea/kettle/blob/main/docs/research/SOURCES.md">See all 29 sources<svg class="go" viewBox="0 0 24 12" aria-hidden="true"><path d="M3 6h18"/><circle cx="5" cy="6" r="3"/></svg></a>
+      <a href="https://github.com/sdukea/pillow/blob/main/docs/THESIS.md">Read the full thesis<svg class="go" viewBox="0 0 24 12" aria-hidden="true"><path d="M3 6h18"/><circle cx="5" cy="6" r="3"/></svg></a>
+      <a href="https://github.com/sdukea/pillow/blob/main/docs/research/SOURCES.md">See all 29 sources<svg class="go" viewBox="0 0 24 12" aria-hidden="true"><path d="M3 6h18"/><circle cx="5" cy="6" r="3"/></svg></a>
     </div>
   </div>
 </section>
@@ -588,14 +586,14 @@ footer nav a { color: var(--text); opacity: .8; }
     <p>Desk research from October 2026: about 30 web searches plus targeted reads. No user interviews yet. Reddit was not accessible, so user language comes from Hacker News, dev.to and app reviews. Some market figures are secondary and marked as such in the sources. Every hypothesis is untested until the concierge test runs.</p>
     <p>Ananya and the screens shown are illustrations. The calibration chart is a target, not a result.</p>
     <nav aria-label="Documents">
-      <a href="https://github.com/sdukea/kettle/blob/main/docs/research/01-market.md">Market</a>
-      <a href="https://github.com/sdukea/kettle/blob/main/docs/research/02-human-problem.md">Human problem</a>
-      <a href="https://github.com/sdukea/kettle/blob/main/docs/research/03-models-and-moments.md">Models</a>
-      <a href="https://github.com/sdukea/kettle/blob/main/docs/research/04-engine.md">Engine</a>
-      <a href="https://github.com/sdukea/kettle/blob/main/docs/research/05-experience.md">Experience</a>
-      <a href="https://github.com/sdukea/kettle/blob/main/docs/research/06-features.md">Features</a>
-      <a href="https://github.com/sdukea/kettle/blob/main/docs/research/07-company.md">Company</a>
-      <a href="https://github.com/sdukea/kettle/blob/main/docs/research/08-build.md">Build</a>
+      <a href="https://github.com/sdukea/pillow/blob/main/docs/research/01-market.md">Market</a>
+      <a href="https://github.com/sdukea/pillow/blob/main/docs/research/02-human-problem.md">Human problem</a>
+      <a href="https://github.com/sdukea/pillow/blob/main/docs/research/03-models-and-moments.md">Models</a>
+      <a href="https://github.com/sdukea/pillow/blob/main/docs/research/04-engine.md">Engine</a>
+      <a href="https://github.com/sdukea/pillow/blob/main/docs/research/05-experience.md">Experience</a>
+      <a href="https://github.com/sdukea/pillow/blob/main/docs/research/06-features.md">Features</a>
+      <a href="https://github.com/sdukea/pillow/blob/main/docs/research/07-company.md">Company</a>
+      <a href="https://github.com/sdukea/pillow/blob/main/docs/research/08-build.md">Build</a>
     </nav>
   </div>
 </footer>
@@ -607,7 +605,7 @@ footer nav a { color: var(--text); opacity: .8; }
   const tag = document.getElementById('heroTag');
   const stopsG = document.getElementById('heroStops');
   const svg = document.getElementById('heroMap');
-  const steam = document.getElementById('heroSteam');
+  const settle = document.getElementById('heroSettle');
   if (!route || !dot) return;
   const L = route.getTotalLength();
   // Each stop is a moment from the product: where the dot rests and what it learned.
@@ -616,7 +614,7 @@ footer nav a { color: var(--text); opacity: .8; }
     { at: .27,  title: 'Skipped 60%',      note: 'Already known',       dwell: 1500 },
     { at: .52,  title: 'Gap closed',       note: 'Data structures',     dwell: 1500 },
     { at: .76,  title: 'Missed a week',    note: 'Rerouted, no guilt',  dwell: 1700 },
-    { at: 1,    title: 'Ready',            note: 'It whistles',         dwell: 3200 }
+    { at: 1,    title: 'Ready',            note: 'Rest easy',           dwell: 3200 }
   ];
   const ns = 'http://www.w3.org/2000/svg';
   const marks = stops.slice(1, -1).map(st => {
@@ -644,7 +642,7 @@ footer nav a { color: var(--text); opacity: .8; }
     // Anchor the label so it never runs off the edge on narrow screens.
     tag.style.setProperty('--ax', (12 + 76 * p.x / 1100).toFixed(1) + '%');
     tag.classList.toggle('high', i === stops.length - 1);
-    steam.classList.toggle('on', i === stops.length - 1);
+    settle.classList.toggle('on', i === stops.length - 1);
     tag.classList.remove('away');
   }
 
@@ -671,7 +669,7 @@ footer nav a { color: var(--text); opacity: .8; }
     } else if (phase === 'reset') {
       const k = Math.min(1, el / 700);
       dot.style.opacity = 1 - k;
-      steam.classList.remove('on');
+      settle.classList.remove('on');
       if (k === 1) { i = 0; place(0); dot.style.opacity = 1; phase = 'dwell'; t0 = now; show(0, route.getPointAtLength(0)); }
     }
     raf = requestAnimationFrame(frame);

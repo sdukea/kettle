@@ -1,4 +1,4 @@
-# Kettle
+# Pillow
 
 *The question: can we build the Google Maps of human achievement?*
 
@@ -7,11 +7,11 @@ were never the bottleneck. Maps won because of the **blue dot**: knowing
 where you are. For most goals, no product knows where you actually stand.
 
 > **A goal is a test you can't pass yet.**
-> Kettle compiles your goal into an arrival test, measures where you stand
+> Pillow compiles your goal into an arrival test, measures where you stand
 > in about fifteen minutes, tells you what you can skip, gives you the next
 > turn, re-measures as you go, and says honestly when you're ready.
 
-**See it:** [sdukea.github.io/kettle](https://sdukea.github.io/kettle/)
+**See it:** [sdukea.github.io/pillow](https://sdukea.github.io/pillow/)
 
 **Start with:** [docs/THESIS.md](docs/THESIS.md), the final strategic
 document (verdict, insight, product, wedge, MVP, moat, risks, and the "kill
