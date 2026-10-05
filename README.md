@@ -36,9 +36,8 @@ Claims are tagged **[F]** fact, **[I]** inference, **[H]** hypothesis,
 
 ## Status
 
-Desk research is complete. No user interviews have been done yet. The next
-step is the three-week concierge test in
-[08-build](docs/research/08-build.md#mvp-v0-concierge-weeks-13), which has
-binding kill criteria.
+Desk research is complete. **Next: the three-week concierge test.** The kit to
+run it is in [concierge/](concierge/): skill map, 40 checks, rubric, messages,
+tracker templates, and the week-3 decision with binding kill criteria.
 
 The previous project (Nue) is preserved at tag `archive/nue-v1`.

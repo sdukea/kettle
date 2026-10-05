@@ -1,0 +1,31 @@
+topic_id,topic,tier
+T01,Complexity,Core
+T02,Arrays/strings,Core
+T03,Hashing,Core
+T04,Two pointers,Core
+T05,Sliding window,Core
+T06,Prefix sums,Common
+T07,Sorting,Core
+T08,Stack,Core
+T09,Monotonic stack,Common
+T10,Queue/deque,Common
+T11,Binary search,Core
+T12,BS on answer,Common
+T13,Linked lists,Core
+T14,Recursion,Core
+T15,Backtracking,Common
+T16,Tree DFS,Core
+T17,Tree BFS,Core
+T18,BST,Common
+T19,Heaps,Core
+T20,Intervals,Common
+T21,Greedy,Common
+T22,Graphs,Core
+T23,Grids,Core
+T24,Topo sort,Common
+T25,Union-find,Advanced
+T26,Dijkstra,Advanced
+T27,DP 1-D,Core
+T28,DP 2-D,Common
+T29,Tries,Advanced
+T30,Bits,Advanced
