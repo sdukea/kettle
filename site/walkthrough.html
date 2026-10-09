@@ -1,0 +1,769 @@
+<title>Pillow Walkthrough</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a product walkthrough. Each step pairs a phone screen (left) with what the
+   user sees, does, and what Pillow does behind the scenes (right). Light only, matching
+   the Pillow site: white and blue-tinted grey, one accent, the blue location dot. */
+:root {
+  --font: -apple-system, BlinkMacSystemFont, "SF Pro Text", Inter, "Helvetica Neue", Arial, sans-serif;
+  --mono: "SF Mono", "JetBrains Mono", ui-monospace, Menlo, monospace;
+  --page: #ffffff;
+  --surface: #f2f6fc;
+  --card: #ffffff;
+  --text: #1d1d1f;
+  --muted: #6e6e73;
+  --hair: rgba(0, 0, 0, .08);
+  --dot: #0a84ff;
+  --dot-soft: rgba(10, 132, 255, .12);
+  --dot-ink: #0062cc;
+  --good: #1f9d55;
+  --good-soft: rgba(31, 157, 85, .12);
+  --warn: #b26b00;
+  --warn-soft: rgba(255, 159, 10, .16);
+  --bad: #d70015;
+  --bad-soft: rgba(255, 59, 48, .12);
+  --phone-bg: #f5f8fd;
+  --frame: #1d1d1f;
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--page); color: var(--text); font-family: var(--font); font-size: 17px; line-height: 1.5; -webkit-font-smoothing: antialiased; font-feature-settings: "cv05", "cv11"; }
+a { color: var(--dot-ink); }
+h1, h2, h3 { margin: 0; text-wrap: balance; letter-spacing: -.02em; }
+p { margin: 0; }
+.wrap { max-width: 1080px; margin: 0 auto; padding-inline: 22px; }
+section { padding-block: 88px; }
+section.soft { background: var(--surface); }
+.eyebrow { font-size: 13px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--dot-ink); margin-bottom: 12px; }
+.lead { font-size: 20px; color: var(--muted); max-width: 680px; margin-top: 16px; line-height: 1.45; }
+
+/* ---------- top ---------- */
+.top { padding-block: 96px 64px; }
+.brand { display: inline-flex; align-items: center; gap: 10px; font-weight: 600; font-size: 17px; margin-bottom: 40px; }
+.brand svg { width: 28px; height: 28px; }
+.top h1 { font-size: clamp(40px, 6vw, 68px); font-weight: 700; line-height: 1.04; max-width: 900px; }
+.top h1 span { color: var(--dot); }
+.facts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; margin-top: 48px; }
+.fact { background: var(--surface); border-radius: 22px; padding: 22px 22px 20px; min-width: 0; }
+.fact b { display: block; font-size: 30px; font-weight: 700; letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
+.fact span { color: var(--muted); font-size: 15px; line-height: 1.4; display: block; margin-top: 4px; }
+@media (max-width: 820px) { .facts { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+/* ---------- loop diagram ---------- */
+.diagram { margin-top: 40px; overflow-x: auto; background: var(--card); border-radius: 28px; padding: 20px; }
+.diagram svg { display: block; min-width: 860px; width: 100%; height: auto; }
+.d-box { fill: var(--surface); stroke: var(--hair); }
+.d-box.key { fill: var(--dot); stroke: none; }
+.d-box.end { fill: var(--good-soft); stroke: none; }
+.d-box.alt { fill: var(--warn-soft); stroke: none; }
+.d-t { fill: var(--text); font: 600 14px var(--font); }
+.d-s { fill: var(--muted); font: 500 12px var(--font); }
+.d-box.key + .d-t, .d-t.on-key { fill: #ffffff; }
+.d-s.on-key { fill: rgba(255, 255, 255, .85); }
+.d-line { fill: none; stroke: #9aa7b8; stroke-width: 1.6; }
+.d-line.loop { stroke: var(--dot); stroke-width: 2; }
+.d-lbl { fill: var(--muted); font: 500 12px var(--font); }
+.d-lbl.blue { fill: var(--dot-ink); }
+.d-row { fill: var(--muted); font: 600 11px var(--font); letter-spacing: .08em; }
+.d-arrow { fill: #9aa7b8; }
+.d-arrow.blue { fill: var(--dot); }
+
+/* ---------- acts and steps ---------- */
+.act { padding-block: 72px 24px; }
+.act h2 { font-size: clamp(30px, 4vw, 44px); font-weight: 700; }
+.act .lead { font-size: 18px; }
+.step { display: grid; grid-template-columns: 280px minmax(0, 1fr); gap: 56px; align-items: start; padding-block: 44px; border-top: 1px solid var(--hair); }
+.step:first-of-type { border-top: 0; }
+@media (max-width: 820px) { .step { grid-template-columns: 1fr; gap: 28px; justify-items: center; } .step .info { justify-self: stretch; } }
+.num { font-size: 13px; font-weight: 600; color: var(--muted); font-variant-numeric: tabular-nums; letter-spacing: .04em; }
+.info h3 { font-size: 28px; font-weight: 700; margin: 6px 0 14px; }
+.info .say { font-size: 18px; color: var(--muted); max-width: 620px; }
+.rows { margin-top: 22px; display: grid; gap: 12px; max-width: 640px; }
+.row { display: grid; grid-template-columns: 132px minmax(0, 1fr); gap: 16px; padding-top: 12px; border-top: 1px solid var(--hair); font-size: 16px; line-height: 1.5; }
+.row b { font-size: 12px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); padding-top: 3px; }
+.row.bts b { color: var(--dot-ink); }
+@media (max-width: 520px) { .row { grid-template-columns: 1fr; gap: 4px; } }
+.time { display: inline-block; margin-top: 16px; font-size: 13px; font-weight: 600; color: var(--dot-ink); background: var(--dot-soft); padding: 4px 10px; border-radius: 999px; }
+
+/* ---------- phone ---------- */
+.phone { width: 280px; max-width: 100%; background: var(--frame); border-radius: 46px; padding: 10px; box-shadow: 0 0 0 1.5px #3a3a3c, 0 24px 60px rgba(16, 40, 80, .16); }
+.scr { background: var(--phone-bg); border-radius: 37px; height: 560px; overflow: hidden; position: relative; padding: 52px 16px 16px; display: flex; flex-direction: column; gap: 10px; font-size: 13px; line-height: 1.35; color: #000; }
+.isl { position: absolute; top: 10px; left: 50%; transform: translateX(-50%); width: 92px; height: 26px; border-radius: 99px; background: #000; }
+.tiny { font-size: 11px; color: rgba(60, 60, 67, .6); }
+.lt { font-size: 24px; font-weight: 700; letter-spacing: -.02em; line-height: 1.1; }
+.mt { font-size: 18px; font-weight: 700; letter-spacing: -.01em; line-height: 1.2; }
+.c { background: #fff; border-radius: 14px; padding: 12px; display: flex; flex-direction: column; gap: 6px; }
+.lbl { font-size: 10px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: rgba(60, 60, 67, .6); }
+.lbl.blue { color: var(--dot); }
+.btn { margin-top: auto; background: var(--dot); color: #fff; text-align: center; font-weight: 600; font-size: 15px; padding: 12px; border-radius: 999px; }
+.btn.grey { background: rgba(118, 118, 128, .14); color: var(--dot-ink); margin-top: 0; }
+.btns { margin-top: auto; display: flex; flex-direction: column; gap: 8px; }
+.btns .btn { margin-top: 0; }
+.opt { background: #fff; border-radius: 12px; padding: 10px 12px; display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.opt.sel { box-shadow: inset 0 0 0 2px var(--dot); }
+.opt i { width: 16px; height: 16px; border-radius: 50%; border: 1.5px solid rgba(60, 60, 67, .3); flex: none; }
+.opt.sel i { border: 5px solid var(--dot); }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip { font-size: 11px; font-weight: 600; padding: 5px 9px; border-radius: 999px; background: rgba(118, 118, 128, .12); color: #000; }
+.chip.on { background: var(--dot); color: #fff; }
+.chip.good { background: var(--good-soft); color: var(--good); }
+.chip.warn { background: var(--warn-soft); color: var(--warn); }
+.chip.bad { background: var(--bad-soft); color: var(--bad); }
+.code { font-family: var(--mono); font-size: 10.5px; line-height: 1.55; background: #0f1724; color: #d6e2f5; border-radius: 12px; padding: 10px; white-space: pre; overflow: hidden; }
+.code .k { color: #7cc4ff; }
+.code .hl { background: rgba(255, 69, 58, .32); display: inline-block; width: 100%; }
+.bar { height: 6px; border-radius: 99px; background: rgba(60, 60, 67, .14); position: relative; }
+.bar i { position: absolute; inset: 0 auto 0 0; border-radius: 99px; background: var(--dot); }
+.seg { display: grid; grid-template-columns: repeat(3, 1fr); background: rgba(118, 118, 128, .12); border-radius: 9px; padding: 2px; font-size: 11px; font-weight: 600; text-align: center; }
+.seg span { padding: 6px 0; border-radius: 7px; }
+.seg .sel { background: #fff; box-shadow: 0 2px 6px rgba(0, 0, 0, .1); }
+.timer { display: flex; justify-content: space-between; align-items: center; }
+.timer b { font-variant-numeric: tabular-nums; font-size: 12px; color: var(--dot-ink); background: var(--dot-soft); padding: 3px 8px; border-radius: 99px; }
+.ok { color: var(--good); font-weight: 600; font-size: 12px; }
+.li { display: flex; gap: 8px; align-items: flex-start; }
+.li .d { width: 8px; height: 8px; border-radius: 50%; margin-top: 4px; flex: none; background: var(--dot); }
+.mic { width: 64px; height: 64px; border-radius: 50%; background: var(--dot); margin: 6px auto; box-shadow: 0 0 0 10px var(--dot-soft); display: grid; place-items: center; }
+.mic svg { width: 24px; height: 24px; }
+.route { display: flex; flex-direction: column; gap: 0; }
+.rt { display: grid; grid-template-columns: 18px 1fr auto; gap: 8px; align-items: center; padding: 6px 0; position: relative; }
+.rt::before { content: ""; position: absolute; left: 8px; top: 0; bottom: 0; width: 2px; background: rgba(60, 60, 67, .14); }
+.rt .n { width: 12px; height: 12px; border-radius: 50%; position: relative; z-index: 1; margin-left: 3px; background: #fff; border: 2px solid rgba(60, 60, 67, .3); }
+.rt .n.s { background: var(--good); border-color: var(--good); }
+.rt .n.here { background: var(--dot); border-color: #fff; box-shadow: 0 0 0 3px var(--dot); }
+.rt .n.g { border-color: var(--warn); }
+.big { font-size: 34px; font-weight: 700; letter-spacing: -.03em; }
+
+/* ---------- behind-the-scenes tables ---------- */
+.cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; margin-top: 40px; }
+@media (max-width: 820px) { .cards { grid-template-columns: 1fr; } }
+.card { background: var(--card); border-radius: 24px; padding: 28px; min-width: 0; }
+section.soft .card { background: #fff; }
+.card h3 { font-size: 21px; font-weight: 700; margin-bottom: 10px; }
+.card p, .card li { font-size: 16px; color: var(--muted); line-height: 1.5; }
+.card ul { margin: 0; padding-left: 18px; display: grid; gap: 6px; }
+.card strong { color: var(--text); font-weight: 600; }
+.tbl { width: 100%; border-collapse: collapse; font-size: 15px; margin-top: 8px; }
+.tbl th { text-align: left; font-size: 12px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); padding: 8px 10px 8px 0; border-bottom: 1px solid var(--hair); }
+.tbl td { padding: 10px 10px 10px 0; border-bottom: 1px solid var(--hair); vertical-align: top; color: var(--muted); }
+.tbl td:first-child { color: var(--text); font-weight: 600; white-space: nowrap; }
+.scroll { overflow-x: auto; }
+.pill { display: inline-block; font-size: 12px; font-weight: 600; padding: 3px 9px; border-radius: 999px; }
+.pill.free { background: var(--good-soft); color: var(--good); }
+.pill.paid { background: var(--dot-soft); color: var(--dot-ink); }
+.never li { color: var(--text); }
+
+/* ---------- decision ---------- */
+.qs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; margin-top: 40px; }
+@media (max-width: 820px) { .qs { grid-template-columns: 1fr; } }
+.q { background: #fff; border-radius: 24px; padding: 26px; min-width: 0; }
+.q .k { font-size: 12px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--dot-ink); }
+.q h3 { font-size: 21px; margin: 8px 0 8px; }
+.q p { color: var(--muted); font-size: 16px; }
+.q .test { margin-top: 12px; font-size: 14px; color: var(--text); padding-top: 12px; border-top: 1px solid var(--hair); }
+.verdict { margin-top: 32px; background: var(--dot); color: #fff; border-radius: 28px; padding: 32px; }
+.verdict h3 { font-size: 26px; margin-bottom: 10px; }
+.verdict p { font-size: 17px; color: rgba(255, 255, 255, .88); max-width: 780px; }
+.verdict p + p { margin-top: 10px; }
+.foot { padding-block: 40px; font-size: 13px; color: var(--muted); border-top: 1px solid var(--hair); }
+</style>
+
+<!-- ============ TOP ============ -->
+<header class="top">
+  <div class="wrap">
+    <div class="brand"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3.5 5.5Q10 3 16.5 5.5Q18 10 16.5 14.5Q10 17 3.5 14.5Q2 10 3.5 5.5Z" fill="rgba(10,132,255,.12)" stroke="#0a84ff" stroke-width="1.5" stroke-linejoin="round"/><circle cx="10" cy="10" r="2.8" fill="#0a84ff"/></svg>Pillow · how the app works</div>
+    <h1>A student opens Pillow with a test date. <span>It finds their level, then guides them to “ready”.</span></h1>
+    <p class="lead">Every screen, in order, with what the student sees, what they do, and what Pillow does behind the scenes. The names, dates and numbers on the screens are examples.</p>
+    <div class="facts">
+      <div class="fact"><b>15 min</b><span>The first check that finds your level</span></div>
+      <div class="fact"><b>25 min</b><span>A typical daily task, sized to the time you have</span></div>
+      <div class="fact"><b>Weekly</b><span>A 10-minute re-check that updates your plan</span></div>
+      <div class="fact"><b>One goal</b><span>A coding test or interview with a real date</span></div>
+    </div>
+  </div>
+</header>
+
+<!-- ============ THE LOOP ============ -->
+<section class="soft" id="loop">
+  <div class="wrap">
+    <p class="eyebrow">The whole thing on one page</p>
+    <h2 style="font-size:clamp(30px,4vw,44px)">Set up once. Then a daily loop, a weekly check, and a finish line.</h2>
+    <div class="diagram">
+      <svg viewBox="0 0 1000 430" role="img" aria-label="Flow: sign in, set your goal, take the 15-minute check, see your result, start your season. Then a daily loop of task, session and quick check, with a weekly check-in and a reroute after missed days. Finally: ready, take the real test, report the result, next goal.">
+        <defs>
+          <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="d-arrow" d="M0 0L10 5L0 10z"/></marker>
+          <marker id="arb" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="d-arrow blue" d="M0 0L10 5L0 10z"/></marker>
+        </defs>
+        <text class="d-row" x="20" y="22">FIRST 20 MINUTES</text>
+        <rect class="d-box" x="20" y="34" width="160" height="56" rx="14"/><text class="d-t" x="100" y="58" text-anchor="middle">Sign in</text><text class="d-s" x="100" y="76" text-anchor="middle">Google account</text>
+        <rect class="d-box" x="220" y="34" width="160" height="56" rx="14"/><text class="d-t" x="300" y="58" text-anchor="middle">Set your goal</text><text class="d-s" x="300" y="76" text-anchor="middle">test, date, hours</text>
+        <rect class="d-box key" x="420" y="34" width="160" height="56" rx="14"/><text class="d-t on-key" x="500" y="58" text-anchor="middle">15-minute check</text><text class="d-s on-key" x="500" y="76" text-anchor="middle">4 short checks</text>
+        <rect class="d-box key" x="620" y="34" width="160" height="56" rx="14"/><text class="d-t on-key" x="700" y="58" text-anchor="middle">Your result</text><text class="d-s on-key" x="700" y="76" text-anchor="middle">skip, gaps, ready-by</text>
+        <rect class="d-box" x="820" y="34" width="160" height="56" rx="14"/><text class="d-t" x="900" y="58" text-anchor="middle">Start season</text><text class="d-s" x="900" y="76" text-anchor="middle">paid, until test day</text>
+        <path class="d-line" d="M180 62H218" marker-end="url(#ar)"/><path class="d-line" d="M380 62H418" marker-end="url(#ar)"/><path class="d-line" d="M580 62H618" marker-end="url(#ar)"/><path class="d-line" d="M780 62H818" marker-end="url(#ar)"/>
+        <path class="d-line" d="M900 90V122H300V160" marker-end="url(#ar)"/>
+
+        <text class="d-row" x="20" y="152">EVERY DAY</text>
+        <rect class="d-box alt" x="20" y="164" width="160" height="56" rx="14"/><text class="d-t" x="100" y="188" text-anchor="middle">Missed days?</text><text class="d-s" x="100" y="206" text-anchor="middle">plan reroutes, no guilt</text>
+        <rect class="d-box" x="220" y="164" width="160" height="56" rx="14"/><text class="d-t" x="300" y="188" text-anchor="middle">Today’s task</text><text class="d-s" x="300" y="206" text-anchor="middle">one thing, sized to time</text>
+        <rect class="d-box" x="420" y="164" width="160" height="56" rx="14"/><text class="d-t" x="500" y="188" text-anchor="middle">Do the session</text><text class="d-s" x="500" y="206" text-anchor="middle">practise a gap</text>
+        <rect class="d-box" x="620" y="164" width="160" height="56" rx="14"/><text class="d-t" x="700" y="188" text-anchor="middle">Quick check</text><text class="d-s" x="700" y="206" text-anchor="middle">the dot moves on proof</text>
+        <rect class="d-box key" x="820" y="164" width="160" height="56" rx="14"/><text class="d-t on-key" x="900" y="188" text-anchor="middle">Weekly check-in</text><text class="d-s on-key" x="900" y="206" text-anchor="middle">10 min, plan updates</text>
+        <path class="d-line" d="M180 192H218" marker-end="url(#ar)"/><path class="d-line" d="M380 192H418" marker-end="url(#ar)"/><path class="d-line" d="M580 192H618" marker-end="url(#ar)"/>
+        <path class="d-line" d="M780 192H818" marker-end="url(#ar)"/><text class="d-lbl" x="799" y="183" text-anchor="middle">7 days</text>
+        <path class="d-line loop" d="M700 220V250H300V224" marker-end="url(#arb)"/><text class="d-lbl blue" x="500" y="266" text-anchor="middle">next day: the next task is picked from today’s result</text>
+
+        <text class="d-row" x="20" y="300">THE FINISH</text>
+        <path class="d-line" d="M900 220V286H300V310" marker-end="url(#ar)"/><text class="d-lbl" x="620" y="280">when every core topic is solid and a timed mock is passed</text>
+        <rect class="d-box end" x="220" y="314" width="160" height="56" rx="14"/><text class="d-t" x="300" y="338" text-anchor="middle">“You’re ready”</text><text class="d-s" x="300" y="356" text-anchor="middle">stop, rest easy</text>
+        <rect class="d-box" x="420" y="314" width="160" height="56" rx="14"/><text class="d-t" x="500" y="338" text-anchor="middle">Real test</text><text class="d-s" x="500" y="356" text-anchor="middle">the OA or interview</text>
+        <rect class="d-box" x="620" y="314" width="160" height="56" rx="14"/><text class="d-t" x="700" y="338" text-anchor="middle">Report result</text><text class="d-s" x="700" y="356" text-anchor="middle">passed or not</text>
+        <rect class="d-box" x="820" y="314" width="160" height="56" rx="14"/><text class="d-t" x="900" y="338" text-anchor="middle">Next goal</text><text class="d-s" x="900" y="356" text-anchor="middle">or done</text>
+        <path class="d-line" d="M380 342H418" marker-end="url(#ar)"/><path class="d-line" d="M580 342H618" marker-end="url(#ar)"/><path class="d-line" d="M780 342H818" marker-end="url(#ar)"/>
+        <path class="d-line" d="M700 370V400H100V222" marker-end="url(#ar)" stroke-dasharray="4 5"/><text class="d-lbl" x="400" y="418" text-anchor="middle">didn’t pass: the real test becomes the best check yet, and the plan reroutes</text>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ACT 1 ============ -->
+<div class="wrap act" id="first">
+  <p class="eyebrow">Part 1 · The first 20 minutes</p>
+  <h2>From “I have a test on Dec 1” to “I know exactly where I stand.”</h2>
+  <p class="lead">Ten screens. The aim is one moment: being told accurately what you already know, and getting time back.</p>
+</div>
+<div class="wrap">
+
+  <div class="step">
+    <div class="phone" role="img" aria-label="Welcome screen"><div class="scr"><div class="isl"></div>
+      <div style="margin-top:40px;display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center">
+        <svg viewBox="0 0 20 20" width="48" height="48" aria-hidden="true"><path d="M3.5 5.5Q10 3 16.5 5.5Q18 10 16.5 14.5Q10 17 3.5 14.5Q2 10 3.5 5.5Z" fill="rgba(10,132,255,.12)" stroke="#0a84ff" stroke-width="1.2" stroke-linejoin="round"/><circle cx="10" cy="10" r="2.8" fill="#0a84ff"/></svg>
+        <div class="lt">Pillow</div>
+        <div style="font-size:16px;font-weight:600;line-height:1.3">Know what to skip before your coding interview.</div>
+        <div class="tiny" style="font-size:12px">A 15-minute check finds your level. Then a short task each day on your weak spots, until you’re ready.</div>
+      </div>
+      <div class="btns"><div class="btn">Continue with Google</div><div class="tiny" style="text-align:center">The check and your result are free</div></div>
+    </div></div>
+    <div class="info">
+      <span class="num">Screen 1</span>
+      <h3>Welcome</h3>
+      <p class="say">One sentence of what it does, one button. No feature tour, no carousel.</p>
+      <div class="rows">
+        <div class="row"><b>They see</b><span>The promise: find out what you can skip. That the check and the result are free.</span></div>
+        <div class="row"><b>They do</b><span>Sign in with Google (one tap) so their progress is saved.</span></div>
+        <div class="row bts"><b>Pillow</b><span>Creates an account with just a name and email. Nothing else is asked for yet.</span></div>
+      </div>
+      <span class="time">10 seconds</span>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="phone" role="img" aria-label="Goal screen"><div class="scr"><div class="isl"></div>
+      <div class="mt">What are you preparing for?</div>
+      <div class="opt sel">Internship online assessment<i></i></div>
+      <div class="opt">Campus placement coding round<i></i></div>
+      <div class="opt">New-grad interview loop<i></i></div>
+      <div class="c"><span class="lbl">When is it?</span><b>Mon, Dec 1</b><span class="lbl" style="margin-top:4px">Company (optional)</span><span class="tiny">Amazon</span></div>
+      <div class="c"><span class="lbl">Hours a week</span><div class="chips"><span class="chip">2–3</span><span class="chip on">4–6</span><span class="chip">7–10</span><span class="chip">10+</span></div><span class="lbl" style="margin-top:4px">Language</span><div class="chips"><span class="chip on">Python</span><span class="chip">Java</span><span class="chip">C++</span></div></div>
+      <div class="btn">Continue</div>
+    </div></div>
+    <div class="info">
+      <span class="num">Screen 2</span>
+      <h3>Set your goal</h3>
+      <p class="say">The four facts Pillow needs: which test, when, how much time per week, which language.</p>
+      <div class="rows">
+        <div class="row"><b>They see</b><span>Three test types, a date picker, hours-a-week chips, and a language choice.</span></div>
+        <div class="row"><b>They do</b><span>Tap through in under a minute. Company is optional.</span></div>
+        <div class="row bts"><b>Pillow</b><span>Picks the matching “arrival test” (what passing looks like for that test type) and works out how many 25-minute sessions fit before the date. 4–6 hours a week is about 12 sessions a week.</span></div>
+      </div>
+      <span class="time">40 seconds</span>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="phone" role="img" aria-label="Arrival test screen"><div class="scr"><div class="isl"></div>
+      <div class="tiny">Internship OA · Dec 1</div>
+      <div class="mt">Here’s what passing looks like</div>
+      <div class="c"><span class="lbl blue">The test</span><b>2 problems, easy to medium</b><span class="tiny">90 minutes · auto-graded · code must pass hidden tests</span></div>
+      <div class="c"><span class="lbl blue">Usually covers</span><div class="chips"><span class="chip">Arrays</span><span class="chip">Hashing</span><span class="chip">Two pointers</span><span class="chip">Sliding window</span><span class="chip">Trees</span><span class="chip">Graphs</span><span class="chip">DP</span></div></div>
+      <div class="c"><span class="lbl blue">You’re ready when</span><span>All 16 core topics are solid, and you pass a timed 2-problem mock.</span></div>
+      <div class="btns"><div class="btn">Looks right</div><div class="btn grey">Edit</div></div>
+    </div></div>
+    <div class="info">
+      <span class="num">Screen 3</span>
+      <h3>The finish line</h3>
+      <p class="say">Before measuring anything, Pillow shows what “done” means. A vague goal becomes a concrete bar the student can see.</p>
+      <div class="rows">
+        <div class="row"><b>They see</b><span>The test format, the topics it usually covers, and the exact rule for “ready”.</span></div>
+        <div class="row"><b>They do</b><span>Confirm, or edit if they know something specific (for example, “this company asks SQL too”).</span></div>
+        <div class="row bts"><b>Pillow</b><span>Locks in which of the 30 topics matter and how much: 16 core topics must be solid, 10 common ones at least shaky, 4 advanced ones never block “ready”.</span></div>
+      </div>
+      <span class="time">15 seconds</span>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="phone" role="img" aria-label="Before the check"><div class="scr"><div class="isl"></div>
+      <div class="lt" style="margin-top:10px">15 minutes.<br>4 short checks.</div>
+      <div class="c"><div class="li"><span class="d"></span><span><b>It finds what you can skip.</b> There’s no score to pass.</span></div><div class="li"><span class="d"></span><span><b>No hints, by design.</b> Otherwise we can’t tell what you know.</span></div><div class="li"><span class="d"></span><span><b>Private.</b> Never shared with your college or any employer.</span></div></div>
+      <div class="c"><span class="lbl">Before each check</span><span>We’ll ask how confident you feel, 1 to 5.</span></div>
+      <div class="btn">Start the check</div>
+    </div></div>
+    <div class="info">
+      <span class="num">Screen 4</span>
+      <h3>Before the check</h3>
+      <p class="say">This screen exists because people avoid being tested. It frames the check as a way to save time, not as an exam.</p>
+      <div class="rows">
+        <div class="row"><b>They see</b><span>How long it takes, that it’s private, that there are no hints and why.</span></div>
+        <div class="row"><b>They do</b><span>Tap Start.</span></div>
+        <div class="row bts"><b>Pillow</b><span>Chooses the first check to be one most people can pass, so the first result is a win.</span></div>
+      </div>
+      <span class="time">10 seconds</span>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="phone" role="img" aria-label="Code check"><div class="scr"><div class="isl"></div>
+      <div class="timer"><span class="tiny">Check 1 of 4 · Code</span><b>6:12</b></div>
+      <div class="mt" style="font-size:16px">Two Sum</div>
+      <div class="tiny" style="font-size:12px;color:#000">Return the indices of the two numbers that add up to the target.</div>
+<div class="code"><span class="k">def</span> two_sum(nums, target):
+    seen = {}
+    <span class="k">for</span> i, x <span class="k">in</span> enumerate(nums):
+        <span class="k">if</span> target - x <span class="k">in</span> seen:
+            <span class="k">return</span> [seen[target-x], i]
+        seen[x] = i</div>
+      <div class="c" style="flex-direction:row;justify-content:space-between;align-items:center"><span class="ok">✓ 3 of 3 tests passed</span><span class="tiny">2:48 used</span></div>
+      <div class="btn">Next check</div>
+    </div></div>
+    <div class="info">
+      <span class="num">Screen 5</span>
+      <h3>Check: write the code</h3>
+      <p class="say">A real coding problem in a real editor, with a timer. Easy ones get 8 minutes, medium ones 15.</p>
+      <div class="rows">
+        <div class="row"><b>They see</b><span>The problem, an editor, Run, and the time left.</span></div>
+        <div class="row"><b>They do</b><span>Write the solution and run it.</span></div>
+        <div class="row bts"><b>Pillow</b><span>Runs the code against hidden tests, records time used and any nudges. Scores 0–3: here a 3 (correct, fast). Marks “Hashing” as passed once.</span></div>
+      </div>
+      <span class="time">up to 8 minutes</span>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="phone" role="img" aria-label="Approach check"><div class="scr"><div class="isl"></div>
+      <div class="timer"><span class="tiny">Check 2 of 4 · Approach</span><b>3:20</b></div>
+      <div class="mt" style="font-size:16px">Longest substring without repeating characters</div>
+      <span class="lbl">What would you use?</span>
+      <div class="opt">Nested loops<i></i></div>
+      <div class="opt">Sort the string<i></i></div>
+      <div class="opt sel">Sliding window + a map<i></i></div>
+      <span class="lbl">Time complexity</span>
+      <div class="chips"><span class="chip">O(n²)</span><span class="chip on">O(n)</span><span class="chip">O(n log n)</span></div>
+      <div class="c"><span class="lbl">Why, in one line</span><span>Move the left edge past the last repeat; each char is visited once.</span></div>
+      <div class="btn">Next check</div>
+    </div></div>
+    <div class="info">
+      <span class="num">Screen 6</span>
+      <h3>Check: choose the approach</h3>
+      <p class="say">No full code. Just “how would you solve this, and why?” It’s fast, and it shows whether they can pick the right data structure, which is the skill most students lack.</p>
+      <div class="rows">
+        <div class="row"><b>They see</b><span>A medium problem, a few approaches to pick from, complexity options, a one-line “why”.</span></div>
+        <div class="row"><b>They do</b><span>Pick and explain in about 4 minutes.</span></div>
+        <div class="row bts"><b>Pillow</b><span>Grades the choices automatically. AI grades the “why” against a rubric. If it isn’t sure, it asks one more question instead of guessing. Passing a medium here also gives credit to the topics it builds on (hashing, two pointers).</span></div>
+      </div>
+      <span class="time">4 minutes</span>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="phone" role="img" aria-label="Find the bug check"><div class="scr"><div class="isl"></div>
+      <div class="timer"><span class="tiny">Check 3 of 4 · Find the bug</span><b>2:05</b></div>
+      <div class="tiny" style="font-size:12px;color:#000">This has one bug. Tap the line, fix it, and give an input that breaks it.</div>
+<div class="code"><span class="k">def</span> longest(s):
+    seen = {}
+    best = start = 0
+    <span class="k">for</span> i, ch <span class="k">in</span> enumerate(s):
+        <span class="k">if</span> ch <span class="k">in</span> seen:
+<span class="hl">            start = seen[ch] + 1</span>
+        seen[ch] = i
+        best = max(best, i-start+1)
+    <span class="k">return</span> best</div>
+      <div class="c"><span class="lbl">Input that breaks it</span><span style="font-family:var(--mono)">"abba"</span></div>
+      <div class="c" style="border:1.5px solid var(--warn)"><span class="lbl">Your fix</span><span style="font-family:var(--mono);font-size:11px">start = seen[ch] + 1</span><span class="tiny">Not quite. 1 minute left.</span></div>
+    </div></div>
+    <div class="info">
+      <span class="num">Screen 7</span>
+      <h3>Check: find the bug</h3>
+      <p class="say">Reading and debugging code is half of real interviews. In this example the student finds the right line but can’t fix it.</p>
+      <div class="rows">
+        <div class="row"><b>They see</b><span>A short snippet with one real bug.</span></div>
+        <div class="row"><b>They do</b><span>Tap the wrong line, type a fix, give a breaking input.</span></div>
+        <div class="row bts"><b>Pillow</b><span>Runs their fix against tests. Here: right line, wrong fix, so a 1. Sliding window looked fine on the approach check, so the two results now disagree. Pillow marks it “shaky” and plans to look again.</span></div>
+      </div>
+      <span class="time">4 minutes</span>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="phone" role="img" aria-label="Explain aloud check"><div class="scr"><div class="isl"></div>
+      <div class="timer"><span class="tiny">Check 4 of 4 · Explain</span><b>1:40</b></div>
+      <div class="mt" style="font-size:16px">Explain out loud: when would you use BFS instead of DFS?</div>
+      <div class="mic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3" fill="#fff"/><path d="M6 11a6 6 0 0 0 12 0M12 17v4" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round"/></svg></div>
+      <div class="tiny" style="text-align:center">Hold to talk · 0:42</div>
+      <div class="c"><span class="lbl">What we heard</span><span>“BFS goes level by level so… for shortest path? DFS is for, um, going deep. I’m not sure when exactly.”</span></div>
+      <div class="btn">Finish</div>
+    </div></div>
+    <div class="info">
+      <span class="num">Screen 8</span>
+      <h3>Check: explain it out loud</h3>
+      <p class="say">Interviews are spoken. Explaining something shows whether they understand it or just memorised it.</p>
+      <div class="rows">
+        <div class="row"><b>They see</b><span>One question and a microphone. Typing is offered as a fallback.</span></div>
+        <div class="row"><b>They do</b><span>Talk for under 3 minutes.</span></div>
+        <div class="row bts"><b>Pillow</b><span>Converts speech to text. AI grades it against a rubric (here: half right, a 1). Graphs become a gap. If the AI grader is unsure, it’s treated as “not checked yet”, never as a fail.</span></div>
+      </div>
+      <span class="time">3 minutes</span>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="phone" role="img" aria-label="Result screen"><div class="scr"><div class="isl"></div>
+      <div class="tiny">Internship OA · Dec 1</div>
+      <div class="mt">Here’s where you stand</div>
+      <div class="c"><span class="lbl" style="color:var(--good)">You can skip about 45%</span><div class="chips"><span class="chip good">Arrays</span><span class="chip good">Hashing</span><span class="chip good">Two pointers</span><span class="chip good">Sorting</span><span class="chip good">Stack</span><span class="chip good">+7 more</span></div></div>
+      <div class="c"><span class="lbl" style="color:var(--bad)">Your 2 real gaps</span><span><b>Sliding window</b>: right idea, but the window moved backwards on “abba”.</span><span><b>Graphs</b>: unsure when BFS beats DFS.</span></div>
+      <div class="c"><span class="lbl">Not checked yet</span><span>Trees, DP. Your weekly check covers them.</span></div>
+      <div class="c"><span class="lbl blue">Rough ready-by</span><b>Nov 14 – 28</b><span class="tiny">Your test is Dec 1. You’re on track.</span></div>
+      <div class="btn">Start today’s 25 minutes</div>
+    </div></div>
+    <div class="info">
+      <span class="num">Screen 9 · the key moment</span>
+      <h3>Your result</h3>
+      <p class="say">The screen the whole product is built around. Students get time back (the skip list), a short focus (two gaps, each with evidence), and an honest date.</p>
+      <div class="rows">
+        <div class="row"><b>They see</b><span>What they can skip, two gaps with the reason for each, what hasn’t been checked, and a date range compared to their test date.</span></div>
+        <div class="row"><b>They do</b><span>Read it. They can tap any gap to see the evidence, or contest it (“I know this”) to get a quick re-check.</span></div>
+        <div class="row bts"><b>Pillow</b><span>Turns scores into a status for each topic (solid, shaky, gap, unknown) and works out the skip share. Picks gaps that can be worked on now. Estimates the date from gaps × sessions per week, and shows it as a range because it’s rough.</span></div>
+      </div>
+      <span class="time">the student’s “wait, it knows that?” moment</span>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="phone" role="img" aria-label="Season pass screen"><div class="scr"><div class="isl"></div>
+      <div class="mt" style="margin-top:6px">Keep going until Dec 1</div>
+      <div class="c"><div class="li"><span class="d"></span><span>A task every day, sized to the time you have</span></div><div class="li"><span class="d"></span><span>A 10-minute check-in each week that updates your plan</span></div><div class="li"><span class="d"></span><span>A ready-by date that gets sharper</span></div><div class="li"><span class="d"></span><span>The “you’re ready” call, backed by a timed mock</span></div></div>
+      <div class="c" style="align-items:center;text-align:center"><span class="big">₹499</span><span class="tiny">once, for your whole season · no subscription</span></div>
+      <div class="btns"><div class="btn">Start my season</div><div class="tiny" style="text-align:center">Your result stays free either way</div></div>
+    </div></div>
+    <div class="info">
+      <span class="num">Screen 10</span>
+      <h3>Start your season</h3>
+      <p class="say">The paywall comes after the student has seen value. They pay once per test, not monthly, because the need ends when the test does.</p>
+      <div class="rows">
+        <div class="row"><b>They see</b><span>What continuing gets them and one price for the whole season.</span></div>
+        <div class="row"><b>They do</b><span>Pay by UPI or card, or leave with their result.</span></div>
+        <div class="row bts"><b>Pillow</b><span>₹499 is a test price, not researched. Optionally, the first 3 days are free so students feel the daily loop before paying.</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ ACT 2 ============ -->
+<section class="soft" style="padding-block:0">
+<div class="wrap act" id="daily">
+  <p class="eyebrow">Part 2 · Every day</p>
+  <h2>Open the app. One task. Close the app.</h2>
+  <p class="lead">There’s no feed and no dashboard. The home screen answers one question: what should I do right now?</p>
+</div>
+<div class="wrap" style="padding-bottom:40px">
+
+  <div class="step">
+    <div class="phone" role="img" aria-label="Now home screen"><div class="scr"><div class="isl"></div>
+      <div class="tiny">Internship OA · Dec 1</div>
+      <div class="lt">Now</div>
+      <div>Likely ready <b>Nov 14 – 28</b></div>
+      <div class="bar"><i style="width:58%"></i></div>
+      <span class="lbl" style="margin-top:4px">How much time do you have?</span>
+      <div class="seg"><span>10 min</span><span class="sel">25 min</span><span>60 min</span></div>
+      <div class="c"><span class="lbl blue">Now · 25 min</span><b style="font-size:15px">Sliding window</b><span>One problem, then a one-question check.</span><span class="tiny">Why this: your top gap, and it’s in most OAs.</span></div>
+      <div class="btn">Start</div>
+      <div class="tiny" style="display:flex;justify-content:space-around"><span>Route</span><span>Skip list</span><span>History</span></div>
+    </div></div>
+    <div class="info">
+      <span class="num">Screen 11 · the home screen</span>
+      <h3>Now</h3>
+      <p class="say">Where you stand, how far you have to go, and exactly one thing to do, with the reason.</p>
+      <div class="rows">
+        <div class="row"><b>They see</b><span>Their ready-by range, a progress bar that only moves on proof, a time picker, and today’s task.</span></div>
+        <div class="row"><b>They do</b><span>Pick how much time they have and tap Start.</span></div>
+        <div class="row bts"><b>Pillow</b><span>Picks the task: the most important gap whose basics are solid, sized to the minutes chosen. If an important topic hasn’t been checked, today’s task is a check instead of practice.</span></div>
+      </div>
+      <span class="time">5 seconds to decide</span>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="phone" role="img" aria-label="Practice session"><div class="scr"><div class="isl"></div>
+      <div class="timer"><span class="tiny">Practice · Sliding window</span><b>14:30</b></div>
+      <div class="mt" style="font-size:16px">Longest Repeating Character Replacement</div>
+      <div class="tiny" style="font-size:12px;color:#000">LeetCode 424 · Medium</div>
+<div class="code"><span class="k">def</span> character_replacement(s, k):
+    count = {}
+    left = best = top = 0
+    <span class="k">for</span> right, ch <span class="k">in</span> enumerate(s):
+        count[ch] = count.get(ch, 0) + 1
+        top = max(top, count[ch])
+        ...</div>
+      <div class="c"><span class="lbl">Stuck?</span><span>Get a hint (a nudge, never the answer). Hints unlock after 10 minutes.</span></div>
+      <div class="btn">Run</div>
+    </div></div>
+    <div class="info">
+      <span class="num">Screen 12</span>
+      <h3>The session</h3>
+      <p class="say">Real practice on the real gap. Help is limited on purpose: AI that hands over answers makes practice scores go up and real test scores go down.</p>
+      <div class="rows">
+        <div class="row"><b>They see</b><span>One problem, an editor, a timer, and a hint button that unlocks after 10 minutes.</span></div>
+        <div class="row"><b>They do</b><span>Solve it. They can also open a link to the one best free explanation for the topic.</span></div>
+        <div class="row bts"><b>Pillow</b><span>Records time, runs, hints used. Hints are pre-written nudges, never full solutions.</span></div>
+      </div>
+      <span class="time">about 20 minutes</span>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="phone" role="img" aria-label="After the session"><div class="scr"><div class="isl"></div>
+      <div class="c"><span class="lbl">Quick check · 1 question</span><span>In this solution, why does <span style="font-family:var(--mono)">left</span> never move backwards?</span><span class="ok">✓ Correct</span></div>
+      <div class="c"><span class="lbl blue">Your position moved</span><div style="display:flex;align-items:center;gap:6px"><b>Sliding window</b><span class="chip bad">Gap</span>→<span class="chip warn">Shaky</span></div><span class="tiny">Ready-by: Nov 14 – 28 → <b style="color:#000">Nov 12 – 25</b></span></div>
+      <div class="c"><span class="lbl">Next session?</span><div class="chips"><span class="chip">Tomorrow 7 am</span><span class="chip on">Tomorrow 8 pm</span><span class="chip">Pick a time</span></div></div>
+      <div class="btn">Done for today</div>
+    </div></div>
+    <div class="info">
+      <span class="num">Screen 13</span>
+      <h3>After the session</h3>
+      <p class="say">One check question, then the progress update, then one tap to plan the next session. Planning when and where you’ll do something roughly doubles follow-through in studies.</p>
+      <div class="rows">
+        <div class="row"><b>They see</b><span>Whether they got it, which topic moved, how the date changed, and a time picker for next time.</span></div>
+        <div class="row"><b>They do</b><span>Answer, pick a time, done.</span></div>
+        <div class="row bts"><b>Pillow</b><span>Updates the topic’s status from the check, not from time spent. Recalculates the date. Schedules one reminder at the chosen time (the only notification that day).</span></div>
+      </div>
+      <span class="time">1 minute</span>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ============ ACT 3 ============ -->
+<div class="wrap act" id="weekly">
+  <p class="eyebrow">Part 3 · Every week, and when life happens</p>
+  <h2>The plan stays honest as things change.</h2>
+</div>
+<div class="wrap">
+
+  <div class="step">
+    <div class="phone" role="img" aria-label="Weekly check-in"><div class="scr"><div class="isl"></div>
+      <div class="tiny">Weekly check-in · 10 min · 3 checks</div>
+      <div class="mt">Week 2 · here’s what changed</div>
+      <div class="c"><span class="lbl">Moved</span><div style="display:flex;gap:6px;align-items:center"><b>Sliding window</b><span class="chip warn">Shaky</span>→<span class="chip good">Solid</span></div><div style="display:flex;gap:6px;align-items:center"><b>Trees</b><span class="chip">Unknown</span>→<span class="chip good">Solid</span></div></div>
+      <div class="c"><span class="lbl">Still working on</span><div style="display:flex;gap:6px;align-items:center"><b>Graphs</b><span class="chip bad">Gap</span></div></div>
+      <div class="c"><span class="lbl">Newly checked</span><div style="display:flex;gap:6px;align-items:center"><b>DP</b><span class="chip bad">Gap</span></div></div>
+      <div class="c"><span class="lbl blue">Ready-by</span><b>Nov 12 – 24</b><span class="tiny">was Nov 12 – 25 · this week: Graphs</span></div>
+    </div></div>
+    <div class="info">
+      <span class="num">Screen 14</span>
+      <h3>Weekly check-in</h3>
+      <p class="say">Three short checks once a week: two on the gaps they’ve practised, one on something not checked yet. This is how Pillow knows they’re improving, rather than assuming.</p>
+      <div class="rows">
+        <div class="row"><b>They see</b><span>What moved, what’s still a gap, anything new found, and the updated date.</span></div>
+        <div class="row"><b>They do</b><span>Take 3 checks (10 minutes).</span></div>
+        <div class="row bts"><b>Pillow</b><span>Uses fresh problems, never repeats. Updates every topic. The date range narrows as evidence builds.</span></div>
+      </div>
+      <span class="time">10 minutes, once a week</span>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="phone" role="img" aria-label="Back after missed days"><div class="scr"><div class="isl"></div>
+      <div class="lt" style="margin-top:14px">Welcome back.</div>
+      <div class="c"><span class="lbl blue">Plan updated</span><span>We’ve rerouted around the 5 days you missed.</span><span>New ready-by: <b>Nov 20 – Dec 1</b></span><span class="tiny">That’s tight for Dec 1, so we’ve dropped two topics that rarely come up: Tries and Bit tricks.</span></div>
+      <div class="c"><span class="lbl">Got 15 minutes?</span><span>One graphs problem to get going again.</span></div>
+      <div class="btn">Start</div>
+    </div></div>
+    <div class="info">
+      <span class="num">Screen 15</span>
+      <h3>Missed days</h3>
+      <p class="say">No streak, nothing lost, no guilt. One missed day often makes people quit a habit app entirely. Pillow treats missed days as normal.</p>
+      <div class="rows">
+        <div class="row"><b>They see</b><span>A plain update: new date, what was cut to make it fit, and a small way back in.</span></div>
+        <div class="row"><b>They do</b><span>Tap Start, or just come back tomorrow.</span></div>
+        <div class="row bts"><b>Pillow</b><span>Re-plans with the days left. If the date is at risk, it drops the least important topics first and says which. It sends one gentle message after 3 quiet days, then stays silent.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="phone" role="img" aria-label="Route view"><div class="scr"><div class="isl"></div>
+      <div class="mt">Your route</div>
+      <div class="tiny">Green is skipped or solid · blue is you · amber is next</div>
+      <div class="c route">
+        <div class="rt"><span class="n s"></span><span>Arrays, hashing, two pointers</span><span class="tiny">skip</span></div>
+        <div class="rt"><span class="n s"></span><span>Sorting, stack, binary search</span><span class="tiny">skip</span></div>
+        <div class="rt"><span class="n s"></span><span>Sliding window</span><span class="tiny">solid</span></div>
+        <div class="rt"><span class="n s"></span><span>Trees</span><span class="tiny">solid</span></div>
+        <div class="rt"><span class="n here"></span><span><b>Graphs</b></span><span class="tiny" style="color:var(--dot-ink)">now</span></div>
+        <div class="rt"><span class="n g"></span><span>Grids</span><span class="tiny">next</span></div>
+        <div class="rt"><span class="n g"></span><span>Dynamic programming</span><span class="tiny">next</span></div>
+        <div class="rt"><span class="n"></span><span>Timed mock</span><span class="tiny">last</span></div>
+      </div>
+      <div class="tiny">Why this order: grids build on graphs; DP is independent, so it can move if you prefer.</div>
+    </div></div>
+    <div class="info">
+      <span class="num">Screen 16</span>
+      <h3>Your route</h3>
+      <p class="say">The full map, for when they want it. It isn’t the home screen, because the whole route at once is what overwhelms people.</p>
+      <div class="rows">
+        <div class="row"><b>They see</b><span>Every topic in order: skipped, solid, now, next. Why the order is what it is.</span></div>
+        <div class="row"><b>They do</b><span>Look, reorder topics if they disagree, or tap any topic for its evidence.</span></div>
+        <div class="row bts"><b>Pillow</b><span>Builds the order from what each topic depends on and how often it shows up in that test. Student changes are respected and the date updates.</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ ACT 4 ============ -->
+<section class="soft" style="padding-block:0">
+<div class="wrap act" id="finish">
+  <p class="eyebrow">Part 4 · The finish</p>
+  <h2>Pillow tells students when to stop.</h2>
+  <p class="lead">Course and practice sites earn more when you study more, so none of them say this.</p>
+</div>
+<div class="wrap" style="padding-bottom:40px">
+
+  <div class="step">
+    <div class="phone" role="img" aria-label="Ready screen"><div class="scr"><div class="isl"></div>
+      <div style="margin-top:24px;display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center">
+        <div style="width:56px;height:56px;border-radius:50%;background:var(--good);display:grid;place-items:center"><svg viewBox="0 0 24 24" width="28" height="28" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="lt">You’re ready.</div>
+        <div class="tiny" style="font-size:12px">Internship OA · Dec 1</div>
+      </div>
+      <div class="c"><span class="lbl">The evidence</span><span>✓ All 16 core topics solid</span><span>✓ Timed mock: 2 of 2 solved in 71 min</span><span>✓ Explanations clear (3 of 3)</span></div>
+      <div class="c"><span class="lbl blue">From here</span><span>Stop adding new topics. A light review the day before. Then rest easy.</span></div>
+      <div class="btn">Got it</div>
+    </div></div>
+    <div class="info">
+      <span class="num">Screen 17</span>
+      <h3>You’re ready</h3>
+      <p class="say">The second big moment. A stop signal, with the evidence behind it.</p>
+      <div class="rows">
+        <div class="row"><b>They see</b><span>The verdict and exactly why: topics solid, mock passed, explanations clear.</span></div>
+        <div class="row"><b>They do</b><span>Stop cramming. Do a light review. Sleep.</span></div>
+        <div class="row bts"><b>Pillow</b><span>Only says “ready” when the destination’s rule is met and a timed mock is passed. If unsure, it asks for one more mock. A wrong “ready” costs more trust than a late one.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="phone" role="img" aria-label="Report the result"><div class="scr"><div class="isl"></div>
+      <div class="mt" style="margin-top:6px">How did the Amazon OA go?</div>
+      <div class="opt sel">Passed<i></i></div>
+      <div class="opt">Didn’t pass<i></i></div>
+      <div class="opt">Still waiting to hear<i></i></div>
+      <div class="c"><span class="lbl">Which topics came up? (optional)</span><div class="chips"><span class="chip on">Hashing</span><span class="chip on">Graphs</span><span class="chip">DP</span><span class="chip">Trees</span><span class="chip">Other</span></div></div>
+      <div class="c"><span class="lbl blue">What’s next?</span><div class="chips"><span class="chip">Interview loop</span><span class="chip">Another OA</span><span class="chip">I’m done</span></div></div>
+      <div class="btn">Send</div>
+    </div></div>
+    <div class="info">
+      <span class="num">Screen 18</span>
+      <h3>Report the result</h3>
+      <p class="say">The real test is the best check there is. Every reported result makes everyone’s ready-by dates more accurate. Over time, that data is what competitors can’t copy.</p>
+      <div class="rows">
+        <div class="row"><b>They see</b><span>Pass, didn’t pass, or waiting, plus optional topics and what’s next.</span></div>
+        <div class="row"><b>They do</b><span>Two taps.</span></div>
+        <div class="row bts"><b>Pillow</b><span>Didn’t pass: treats the test as a check, updates topics, reroutes to the next date. Passed: suggests the natural next goal (an OA leads to the interview loop), carrying everything it knows about them forward.</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ============ BEHIND THE SCENES ============ -->
+<section id="engine">
+  <div class="wrap">
+    <p class="eyebrow">Behind the scenes</p>
+    <h2 style="font-size:clamp(30px,4vw,44px)">How Pillow decides, in plain terms.</h2>
+    <div class="cards">
+      <div class="card" style="grid-column:1 / -1">
+        <h3>The seven decisions</h3>
+        <div class="scroll"><table class="tbl">
+          <tr><th>Decision</th><th>How it’s made</th><th>Built with</th></tr>
+          <tr><td>Score a check (0–3)</td><td>Code runs against hidden tests. Multiple-choice is automatic. Explanations and “why” answers are graded by AI against a written rubric; when it’s unsure, it asks another question instead of guessing.</td><td>Test runner + AI grader</td></tr>
+          <tr><td>Topic status</td><td>Solid, Shaky, Gap or Unknown, from the latest checks. Being solid on an advanced topic gives credit to the basics it depends on.</td><td>Simple rules, later a learner model</td></tr>
+          <tr><td>Skip list</td><td>Everything solid. Never anything unchecked.</td><td>Rules</td></tr>
+          <tr><td>Which gaps to name</td><td>At most three: the most important gaps whose basics are already solid.</td><td>30-topic skill map with dependencies</td></tr>
+          <tr><td>Today’s task</td><td>The task that most improves the chance of passing per minute. Sometimes that’s a check, because measuring an unknown important topic is worth more than practising a known one.</td><td>Scoring rule</td></tr>
+          <tr><td>Ready-by date</td><td>Remaining gaps × sessions each, divided by the sessions they actually do per week. Shown as a range and labelled rough until real results come in.</td><td>Formula, later calibrated on outcomes</td></tr>
+          <tr><td>“You’re ready”</td><td>All core topics solid plus a passed timed mock.</td><td>Rules + mock</td></tr>
+        </table></div>
+      </div>
+      <div class="card">
+        <h3>Free and paid</h3>
+        <ul>
+          <li><span class="pill free">Free</span> Set a goal, see the finish line, take the 15-minute check, get the full result (skip list, gaps, ready-by), see the route.</li>
+          <li><span class="pill paid">₹499 season</span> Daily tasks, weekly check-ins, the updating date, rerouting, timed mocks, and the “ready” call. Paid once, until test day.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Notifications</h3>
+        <ul>
+          <li>At most <strong>one a day</strong>: the reminder for the session the student chose.</li>
+          <li>One message after 3 quiet days. Then silence.</li>
+          <li>The weekly check-in reminder.</li>
+          <li>Never: streak warnings, “you’re falling behind”, or comparisons with others.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>What Pillow stores</h3>
+        <ul>
+          <li>The goal, date, hours and language.</li>
+          <li>Every check: answer, score, time, confidence before it.</li>
+          <li>Each topic’s status over time, and sessions done.</li>
+          <li>The real test result, if the student shares it.</li>
+        </ul>
+      </div>
+      <div class="card never">
+        <h3>What Pillow never does</h3>
+        <ul>
+          <li>Solve problems for the student, or give hints during checks.</li>
+          <li>Share anything with colleges or employers.</li>
+          <li>Move progress for time spent instead of proof.</li>
+          <li>Use streaks, leaderboards or guilt to keep people coming back.</li>
+          <li>Say “ready” without a passed mock.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ DECISION ============ -->
+<section class="soft" id="decision">
+  <div class="wrap">
+    <p class="eyebrow">Should we take it further?</p>
+    <h2 style="font-size:clamp(30px,4vw,44px)">The design holds together. Four questions only real students can answer.</h2>
+    <div class="qs">
+      <div class="q"><span class="k">Screens 4–8</span><h3>Will they take the check?</h3><p>Students tend to avoid being tested when the result might hurt. If most quit during the 15 minutes, nothing after it matters.</p><div class="test">Pass if at least half of those who start finish the check.</div></div>
+      <div class="q"><span class="k">Screen 9</span><h3>Is the result right?</h3><p>If the skip list or gaps feel wrong, trust is gone on the first screen that matters.</p><div class="test">Pass if most students say the skip list and gaps match what they know.</div></div>
+      <div class="q"><span class="k">Screens 11–14</span><h3>Do they come back?</h3><p>One useful result isn’t a product. The daily task and the weekly check-in have to pull them back.</p><div class="test">Pass if at least 30% complete the second weekly check-in.</div></div>
+      <div class="q"><span class="k">Screen 10</span><h3>Will they pay?</h3><p>Liking it isn’t paying for it. A real ₹499 payment is the only proof.</p><div class="test">Pass if at least 5 students in the first group actually pay.</div></div>
+    </div>
+    <div class="verdict">
+      <h3>My read</h3>
+      <p>It’s worth taking further. The app is small and clear: one goal, one check, one result, one task a day, one “ready”. Nothing on these screens is hard to build.</p>
+      <p>The risk isn’t building it. It’s the four questions above, and they’re about people, not code. So build the thinnest version of screens 1–13, put it in front of 15 to 20 students with real test dates, and check those four numbers after three weeks.</p>
+    </div>
+  </div>
+</section>
+
+<footer class="foot">
+  <div class="wrap">Pillow app walkthrough. Every name, date, score and price on the screens is an example. The topic counts (30 topics, 16 core) and check types come from the concierge kit in the repository.</div>
+</footer>
