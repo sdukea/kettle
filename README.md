@@ -36,8 +36,10 @@ Claims are tagged **[F]** fact, **[I]** inference, **[H]** hypothesis,
 
 ## Status
 
-Desk research is complete. **Next: the three-week concierge test.** The kit to
-run it is in [concierge/](concierge/): skill map, 40 checks, rubric, messages,
-tracker templates, and the week-3 decision with binding kill criteria.
+Desk research is complete. **The thin app is built:** [app/](app/) runs the
+whole student flow (sign-up → 15-minute check → result → daily task → weekly
+check-in → mock → ready) plus an admin dashboard with the stop-or-continue
+thresholds. Next: deploy it and put it in front of 15–20 students with real
+test dates. The manual version of the same test is in [concierge/](concierge/).
 
 The previous project (Nue) is preserved at tag `archive/nue-v1`.

@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "pillow-app",
+      "runtimeExecutable": "bash",
+      "runtimeArgs": ["-c", "cd app && DB_PATH=data/dev.db ADMIN_PASSWORD=dev UPI_ID=pillow@upi PORT=8787 npx tsx server/index.ts"],
+      "port": 8787
+    }
+  ]
+}
